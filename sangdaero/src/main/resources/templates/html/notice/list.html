@@ -16,9 +16,7 @@
 </div>
 
 <div id="wrap">
-    <a th:href="@{/board/post}">글쓰기</a>
-
-    <form action="/board/search" method="GET">
+    <form action="/notice/search" method="GET">
         <div class="search">
             <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
         </div>
@@ -26,42 +24,44 @@
         <button>검색하기</button>
     </form>
 
-    <table>
+    <table style="border:1px solid;">
         <thead>
         <tr>
             <th class="one wide">번호</th>
             <th class="ten wide">글제목</th>
             <th class="two wide">작성자</th>
-            <th class="three wide">작성일</th>
+            <th class="three wide">조회수</th>
         </tr>
         </thead>
 
         <tbody>
         <!-- CONTENTS !-->
-        <tr th:each="board : ${boardList}">
+        <tr th:each="notice : ${noticeList}">
             <td>
-                <span th:text="${board.id}"></span>
+                <span th:text="${notice.id}"></span>
             </td>
             <td>
-                <a th:href="@{'/board/post/' + ${board.id}}">
-                    <span th:text="${board.title}"></span>
+                <a th:href="@{'/notice/post/' + ${notice.id}}">
+                    <span th:text="${notice.title}"></span>
                 </a>
             </td>
             <td>
-                <span th:text="${board.writer}"></span>
+                <span th:text="${notice.writer}"></span>
             </td>
             <td>
-                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                <span th:text="${notice.view}"></span>
             </td>
         </tr>
         </tbody>
     </table>
 
     <div>
-    <span th:each="pageNum : ${pageList}" th:inline="text">
-        <a th:href="@{'/?page=' + ${pageNum}}">[[${pageNum}]]</a>
-    </span>
+	    <span th:each="pageNum : ${pageList}" th:inline="text">
+	        <a th:href="@{'/notice/?page=' + ${pageNum}}">[[${pageNum}]]</a>
+	    </span>
     </div>
+    
+    <a th:href="@{/notice/post}">글쓰기</a>
 </div>
 
 <div lang="en" th:replace="common/footer :: footer"></div>

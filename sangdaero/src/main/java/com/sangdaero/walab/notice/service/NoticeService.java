@@ -19,8 +19,8 @@ import java.util.Optional;
 public class NoticeService {
 
     private NoticeRepository mNoticeRepository;
-    private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 수
-    private static final int PAGE_POST_COUNT = 4;  // 한 페이지에 존재하는 게시글 수
+    private static final int BLOCK_PAGE_NUM_COUNT = 6; // 블럭에 존재하는 페이지 수
+    private static final int PAGE_POST_COUNT = 3;  // 한 페이지에 존재하는 게시글 수
 
     public NoticeService(NoticeRepository noticeRepository) {
         this.mNoticeRepository = noticeRepository;
@@ -34,7 +34,7 @@ public class NoticeService {
 
         Page<Notice> page = mNoticeRepository
                 .findAll(PageRequest
-                        .of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
+                        .of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
 
         //List<Notice> Notices = NoticeRepository.findAll();
         List<Notice> notices = page.getContent();
@@ -43,6 +43,8 @@ public class NoticeService {
         for(Notice Notice : notices) {
             noticeDtoList.add(this.convertEntityToDto(Notice));
         }
+        
+        System.out.println("via noticelist");
 
         return noticeDtoList;
     }
@@ -68,6 +70,8 @@ public class NoticeService {
         for(int val=curPageNum, i=0;val<=blockLastPageNum;val++, i++) {
             pageList[i] = val;
         }
+        
+        System.out.println("via pagelist");
 
         return pageList;
     }
@@ -78,14 +82,18 @@ public class NoticeService {
 
     public NoticeDto getPost(Long id) {
         Optional<Notice> NoticeWrapper = mNoticeRepository.findById(id);
-        Notice Notice = NoticeWrapper.get();
+        Notice notice = NoticeWrapper.get();
 
         NoticeDto noticeDto = NoticeDto.builder()
-                .id(Notice.getId())
-                .title(Notice.getTitle())
-                .content(Notice.getContent())
-                .writer(Notice.getWriter())
-                .createdDate(Notice.getCreatedDate())
+                .id(notice.getId())
+                .title(notice.getTitle())
+                .content(notice.getContent())
+                .writer(notice.getWriter())
+                .view(notice.getView())
+                .scope(notice.getScope())
+                .top_category(notice.getTop_category())
+                .sub_category(notice.getSub_category())
+                .createdDate(notice.getCreatedDate())
                 .build();
 
         return noticeDto;
@@ -114,6 +122,10 @@ public class NoticeService {
                 .title(notice.getTitle())
                 .content(notice.getContent())
                 .writer(notice.getWriter())
+                .view(notice.getView())
+                .scope(notice.getScope())
+                .top_category(notice.getTop_category())
+                .sub_category(notice.getSub_category())
                 .createdDate(notice.getCreatedDate())
                 .build();
     }

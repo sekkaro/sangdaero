@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sangdaero.walab.common.board.dto.BoardDto;
 import com.sangdaero.walab.notice.dto.NoticeDto;
 import com.sangdaero.walab.notice.service.NoticeService;
 
@@ -26,13 +27,19 @@ public class NoticeController {
 	}
 	
 	@GetMapping("")
-	public String noticePage() {
-		return "html/notice/list.html";
-	}
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+        List<NoticeDto> noticeDtoList = mNoticeService.getNoticelist(pageNum);
+        Integer[] pageList = mNoticeService.getPageList(pageNum);
+
+        model.addAttribute("noticeList", noticeDtoList);
+        model.addAttribute("pageList", pageList);
+
+        return "html/notice/list.html";
+    }
 
 	@GetMapping("/post")
     public String write() {
-        return "notice/write.html";
+        return "html/notice/write.html";
     }
 
     @PostMapping("/post")
@@ -46,7 +53,7 @@ public class NoticeController {
         NoticeDto noticeDto = mNoticeService.getPost(id);
 
         model.addAttribute("noticeDto", noticeDto);
-        return "notice/detail.html";
+        return "html/notice/detail.html";
     }
 
     @GetMapping("/post/edit/{no}")
@@ -54,7 +61,7 @@ public class NoticeController {
         NoticeDto noticeDto = mNoticeService.getPost(id);
 
         model.addAttribute("noticeDto", noticeDto);
-        return "notice/update.html";
+        return "html/notice/update.html";
     }
 
     @PutMapping("/post/edit/{no}")
@@ -75,7 +82,7 @@ public class NoticeController {
         List<NoticeDto> noticeDtoList = mNoticeService.searchPosts(keyword);
         model.addAttribute("noticeList", noticeDtoList);
 
-        return "notice/list.html";
+        return "html/notice/list.html";
     }
 	
 }
