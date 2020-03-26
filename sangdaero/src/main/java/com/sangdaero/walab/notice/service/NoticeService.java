@@ -19,8 +19,8 @@ import java.util.Optional;
 public class NoticeService {
 
     private NoticeRepository mNoticeRepository;
-    private static final int BLOCK_PAGE_NUM_COUNT = 6; // 블럭에 존재하는 페이지 수
-    private static final int PAGE_POST_COUNT = 3;  // 한 페이지에 존재하는 게시글 수
+    private static final int BLOCK_PAGE_NUMCOUNT = 6; // 블럭에 존재하는 페이지 수
+    private static final int PAGE_POSTCOUNT = 3;  // 한 페이지에 존재하는 게시글 수
 
     public NoticeService(NoticeRepository noticeRepository) {
         this.mNoticeRepository = noticeRepository;
@@ -30,37 +30,37 @@ public class NoticeService {
         return mNoticeRepository.save(noticeDto.toEntity()).getId();
     }
 
-    public List<NoticeDto> getNoticelist(Integer pageNum) {
+    public List<NoticeDto> getNoticelist(Integer pageNum, Long subCategory) {
 
         Page<Notice> page = mNoticeRepository
-                .findAll(PageRequest
-                        .of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+		        	.findAll(PageRequest
+                        .of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
 
         //List<Notice> Notices = NoticeRepository.findAll();
         List<Notice> notices = page.getContent();
         List<NoticeDto> noticeDtoList = new ArrayList<>();
 
-        for(Notice Notice : notices) {
-            noticeDtoList.add(this.convertEntityToDto(Notice));
+        for(Notice notice : notices) {
+        	
+        	noticeDtoList.add(this.convertEntityToDto(notice));
+            
         }
-        
-        System.out.println("via noticelist");
 
         return noticeDtoList;
     }
 
     public Integer[] getPageList(Integer curPageNum) {
-        Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
+        Integer[] pageList = new Integer[BLOCK_PAGE_NUMCOUNT];
 
         // 총 게시글 수
         Double postsTotalCount = Double.valueOf(this.getNoticeCount());
 
         // 총 게시글 수를 기준으로 계산한 마지막 페이지 번호 계산
-        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
+        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POSTCOUNT)));
 
         // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-                ? curPageNum + BLOCK_PAGE_NUM_COUNT
+        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUMCOUNT)
+                ? curPageNum + BLOCK_PAGE_NUMCOUNT
                 : totalLastPageNum;
 
         // 페이지 시작 번호 조정
@@ -70,8 +70,6 @@ public class NoticeService {
         for(int val=curPageNum, i=0;val<=blockLastPageNum;val++, i++) {
             pageList[i] = val;
         }
-        
-        System.out.println("via pagelist");
 
         return pageList;
     }
@@ -91,8 +89,8 @@ public class NoticeService {
                 .writer(notice.getWriter())
                 .view(notice.getView())
                 .scope(notice.getScope())
-                .top_category(notice.getTop_category())
-                .sub_category(notice.getSub_category())
+                .topCategory(notice.getTopCategory())
+                .subCategory(notice.getSubCategory())
                 .createdDate(notice.getCreatedDate())
                 .build();
 
@@ -124,8 +122,8 @@ public class NoticeService {
                 .writer(notice.getWriter())
                 .view(notice.getView())
                 .scope(notice.getScope())
-                .top_category(notice.getTop_category())
-                .sub_category(notice.getSub_category())
+                .topCategory(notice.getTopCategory())
+                .subCategory(notice.getSubCategory())
                 .createdDate(notice.getCreatedDate())
                 .build();
     }

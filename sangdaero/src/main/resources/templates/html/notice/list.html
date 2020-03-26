@@ -16,6 +16,15 @@
 </div>
 
 <div id="wrap">
+
+	<select name="category">
+		<option value="1">전체</option>
+		<option value="2">자원봉사자</option>
+		<option value="3">이용자</option>
+		<option value="0">삭제된 공지</option>
+	</select>
+
+
     <form action="/notice/search" method="GET">
         <div class="search">
             <input name="keyword" type="text" placeholder="검색어를 입력해주세요">

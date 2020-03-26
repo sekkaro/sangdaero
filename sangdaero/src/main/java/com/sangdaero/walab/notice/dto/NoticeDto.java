@@ -21,8 +21,8 @@ public class NoticeDto {
     private String writer;
     private Long view;
     private Long scope;
-    private Byte top_category;
-    private Long sub_category;  
+    private Byte topCategory;
+    private Long subCategory;  
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -33,22 +33,22 @@ public class NoticeDto {
                 .content(content)
                 .writer(writer)
                 .scope(scope)
-                .top_category(top_category)
-                .sub_category(sub_category)
+                .topCategory(topCategory)
+                .subCategory(subCategory)
                 .build();
         return notice;
     }
 
     @Builder
-    public NoticeDto(Long id, String title, String content, String writer, Long view, Long scope, Byte top_category, Long sub_category, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public NoticeDto(Long id, String title, String content, String writer, Long view, Long scope, Byte topCategory, Long subCategory, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.writer = writer;
         this.view = view;
         this.scope = scope;
-        this.top_category = top_category;
-        this.sub_category = sub_category;
+        this.topCategory = topCategory;
+        this.subCategory = subCategory;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

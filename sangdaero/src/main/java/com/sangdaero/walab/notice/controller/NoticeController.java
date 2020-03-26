@@ -27,8 +27,8 @@ public class NoticeController {
 	}
 	
 	@GetMapping("")
-	public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
-        List<NoticeDto> noticeDtoList = mNoticeService.getNoticelist(pageNum);
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum, @RequestParam(value = "sub", defaultValue = "1") Long subCategory) {
+        List<NoticeDto> noticeDtoList = mNoticeService.getNoticelist(pageNum, subCategory);
         Integer[] pageList = mNoticeService.getPageList(pageNum);
 
         model.addAttribute("noticeList", noticeDtoList);
@@ -44,6 +44,7 @@ public class NoticeController {
 
     @PostMapping("/post")
     public String write(NoticeDto noticeDto) {
+    	System.out.println(noticeDto);
         mNoticeService.savePost(noticeDto);
         return "redirect:/notice";
     }
