@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head lang="en" th:replace="common/header :: header"></head>
+<body>
+
+<div lang="en" th:replace="common/menu :: menu"></div>
+
+<div id="main" style="margin-left: 15%">
+
+    <div class="w3-teal">
+        <button id="openNav" style="display: none" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
+        <div class="w3-container">
+            <h1>관심사 페이지</h1>
+        </div>
+    </div>
+
+    <div id="wrap1">
+
+        <br>
+        <div>
+            <a th:href="@{/interest/add}">관심사 추가</a>
+        </div>
+        <form action="/interest" method="get">
+            <input type='radio' name='type' value=1 checked/> 자원봉사자
+            <input type='radio' name='type' value=2 /> 이용자
+            <input type="submit" value="테스트">
+        </form>
+        <br><br>
+        <table>
+            <thead>
+            <tr>
+                <th class="ten wide">관심사</th>
+                <th class="two wide">수정</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <!-- CONTENTS !-->
+            <tr th:each="interest : ${interestList}">
+                <td>
+                    <span th:text="${interest.id}"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/interest/add/' + ${interest.id}}">
+                        <span th:text="${interest.name}"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div lang="en" th:replace="common/footer :: footer"></div>
+
+</div>
+</body>
+</html>
