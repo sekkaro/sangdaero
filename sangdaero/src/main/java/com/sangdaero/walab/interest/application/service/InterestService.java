@@ -56,4 +56,8 @@ public class InterestService {
 
         return interestDTO;
     }
+
+    public void deleteInterest(Long id) {
+        mInterestRepository.deleteById(id);
+    }
 }

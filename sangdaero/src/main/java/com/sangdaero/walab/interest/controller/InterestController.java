@@ -53,4 +53,10 @@ public class InterestController {
 		mInterestService.addInterest(interestDTO);
 		return "redirect:/interest";
 	}
+
+	@DeleteMapping("/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		mInterestService.deleteInterest(id);
+		return "redirect:/interest";
+	}
 }

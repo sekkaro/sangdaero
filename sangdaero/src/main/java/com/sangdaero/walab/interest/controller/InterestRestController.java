@@ -16,9 +16,4 @@ public class InterestRestController {
         this.mInterestService = mInterestService;
     }
 
-//    @PutMapping("/edit/{id}")
-//    public void update(InterestDTO interestDTO) {
-//        mInterestService.addInterest(interestDTO);
-//    }
-
 }
