@@ -4,10 +4,8 @@ import com.sangdaero.walab.interest.application.DTO.InterestDTO;
 import com.sangdaero.walab.interest.application.service.InterestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -22,8 +20,9 @@ public class InterestController {
 	}
 
 	@GetMapping("")
-	public String interestPage(@RequestParam(required = false) Byte type, Model model) {
-		List<InterestDTO> interestDTOList = mInterestService.getInterestList(type);
+	public String interestPage(Model model) {
+//		List<InterestDTO> interestDTOList = mInterestService.getInterestList(type);
+		List<InterestDTO> interestDTOList = mInterestService.getInterestList();
 		model.addAttribute("interestList", interestDTOList);
 		return "html/interest/interest.html";
 	}
@@ -40,4 +39,18 @@ public class InterestController {
 		return "redirect:/interest";
 	}
 
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Long id, Model model) {
+		InterestDTO interestDTO = mInterestService.getInterest(id);
+
+		model.addAttribute("interestDTO", interestDTO);
+		return "html/interest/update.html";
+	}
+
+	@PutMapping("/edit/{id}")
+	public String update(InterestDTO interestDTO) {
+		System.out.println(interestDTO);
+		mInterestService.addInterest(interestDTO);
+		return "redirect:/interest";
+	}
 }
