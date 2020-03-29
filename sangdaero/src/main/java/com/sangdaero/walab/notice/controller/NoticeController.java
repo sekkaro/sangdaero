@@ -27,12 +27,20 @@ public class NoticeController {
 	}
 	
 	@GetMapping("")
-	public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum, @RequestParam(value = "sub", defaultValue = "1") Long subCategory) {
-        List<NoticeDto> noticeDtoList = mNoticeService.getNoticelist(pageNum, subCategory);
-        Integer[] pageList = mNoticeService.getPageList(pageNum);
+	public String list(
+			Model model,
+			@RequestParam(value = "page", defaultValue = "1") Integer pageNum,
+			@RequestParam(value = "category", defaultValue = "1") Long category,
+			@RequestParam(value = "keyword", defaultValue = "") String keyword,
+			@RequestParam(value = "type", defaultValue = "0") Integer searchType) {
+        List<NoticeDto> noticeDtoList = mNoticeService.getNoticelist(pageNum, category, keyword, searchType);
+        Integer[] pageList = mNoticeService.getPageList(pageNum, category, keyword, searchType);
 
         model.addAttribute("noticeList", noticeDtoList);
         model.addAttribute("pageList", pageList);
+        model.addAttribute("category", category);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", searchType);
 
         return "html/notice/list.html";
     }
@@ -44,7 +52,6 @@ public class NoticeController {
 
     @PostMapping("/post")
     public String write(NoticeDto noticeDto) {
-    	System.out.println(noticeDto);
         mNoticeService.savePost(noticeDto);
         return "redirect:/notice";
     }
@@ -52,22 +59,44 @@ public class NoticeController {
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long id, Model model) {
         NoticeDto noticeDto = mNoticeService.getPost(id);
+        
+        String category;
+        
+        switch(noticeDto.getSubCategory().toString()) {
+	        case "1":
+	        	category = "전체";
+	        	break;
+	        case "2":
+	        	category = "자원봉사자";
+	        	break;
+	        case "3":
+	        	category = "이용자";
+	        	break;
+	        default:
+	        	category = "에러";
+	        	break;
+        }
 
         model.addAttribute("noticeDto", noticeDto);
+        model.addAttribute("category", category);
+        
+        
         return "html/notice/detail.html";
     }
 
     @GetMapping("/post/edit/{no}")
     public String edit(@PathVariable("no") Long id, Model model) {
         NoticeDto noticeDto = mNoticeService.getPost(id);
-
         model.addAttribute("noticeDto", noticeDto);
         return "html/notice/update.html";
     }
 
     @PutMapping("/post/edit/{no}")
     public String update(NoticeDto noticeDto) {
-        mNoticeService.savePost(noticeDto);
+    	System.out.println("\n\n\n");
+    	System.out.println(noticeDto);
+    	System.out.println("\n\n\n");
+        mNoticeService.updatePost(noticeDto);
         return "redirect:/notice";
     }
 
@@ -79,8 +108,8 @@ public class NoticeController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(value = "keyword") String keyword, Model model) {
-        List<NoticeDto> noticeDtoList = mNoticeService.searchPosts(keyword);
+    public String search(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "type") int searchType, Model model) {
+        List<NoticeDto> noticeDtoList = mNoticeService.searchPosts(keyword, searchType);
         model.addAttribute("noticeList", noticeDtoList);
 
         return "html/notice/list.html";

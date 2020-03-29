@@ -36,17 +36,14 @@ public class Notice extends TimeEntity {
     @ColumnDefault("0")
     private Long view;
     
-    @Column(nullable = false)
-    private Long scope;
-    
     @Column(columnDefinition="TINYINT", length = 1)
     @ColumnDefault("1")
     private Byte status;
     
-    @Column(name="top_catogory", columnDefinition="TINYINT", length = 1, nullable = false)
+    @Column(name="top_category", columnDefinition="TINYINT", length = 1, nullable = false)
     private Byte topCategory;
     
-    @Column(name="sub_catogory", nullable = false)
+    @Column(name="sub_category", nullable = false)
     private Long subCategory;
     
     @Column(columnDefinition="TINYINT", length = 1)
@@ -54,14 +51,16 @@ public class Notice extends TimeEntity {
     private Byte qna;
 
     @Builder
-    public Notice(Long id, String title, String content, String writer, Long scope, Byte topCategory, Long subCategory) {
+    public Notice(Long id, String title, String content, String writer, Long view, Byte topCategory, Long subCategory) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.writer = writer;
-        this.scope = scope;
+        this.view = view;
         this.topCategory = topCategory;
         this.subCategory = subCategory;
+        this.status = 1;
+        this.qna = 0;
     }
 
 }
