@@ -18,9 +18,7 @@
     <div id="wrap1">
 
         <br>
-        <div>
-            <a th:href="@{/interest/add}">관심사 추가</a>
-        </div>
+
         <!--<form action="/interest" method="get">
             <input type='radio' name='type' value=1 checked/> 자원봉사자
             <input type='radio' name='type' value=2 /> 이용자
@@ -58,6 +56,15 @@
             </tr>
             </tbody>
         </table>
+        <hr>
+        <form action="/interest/add" method="post">
+            관심사 : <input type="text" name="name"> <br>
+            <!--type <br>
+            <input type='radio' name='type' value=1 checked/> 자원봉사자
+            <input type='radio' name='type' value=2 /> 이용자
+            <input type='radio' name='type' value=3 /> 나눔-->
+            <input type="submit" value="관심사 추가">
+        </form>
     </div>
 
     <div lang="en" th:replace="common/footer :: footer"></div>
