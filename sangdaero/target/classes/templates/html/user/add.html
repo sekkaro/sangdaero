@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 추가</title>
+</head>
+<body>
+    <form action="/user/add" method="post">
+        유저 이름: <input type="text" name="name"> <br>
+        닉네임: <input type="text" name="nickname"> <br>
+        휴대폰: <input type="text" name="phone"> <br>
+        <ul>
+            <li th:each="interest : ${interestList}">
+                <input type="checkbox"
+                       name="interest"
+                       th:value="${interest.name}" />
+                <label th:text="${interest.name}"></label>
+            </li>
+        </ul>
+
+        <input type="submit" value="등록">
+    </form>
+
+
+
+    <tr th:each="interest : ${interestList}">
+        <td>
+            <a th:href="@{'/interest/add/' + ${interest.id}}">
+                <span th:text="${interest.name}"></span>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{'/interest/edit/' + ${interest.id}}">
+                <button>수정</button>
+            </a>
+        </td>
+        <td>
+            <!--<form id="delete-form" th:action="@{'/interest/' + ${interest.id}}" method="post">-->
+            <input type="hidden" name="_method" value="delete"/>
+            <button id="delete-btn">삭제</button>
+            <!--</form>-->
+        </td>
+    </tr>
+</body>
+</html>
