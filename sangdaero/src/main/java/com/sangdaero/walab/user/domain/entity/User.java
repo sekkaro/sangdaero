@@ -2,21 +2,19 @@ package com.sangdaero.walab.user.domain.entity;
 
 import com.sangdaero.walab.common.board.domain.entity.TimeEntity;
 
-import com.sangdaero.walab.mapper.domain.UserInterest;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.sangdaero.walab.interest.domain.entity.InterestCategory;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class User extends TimeEntity {
 
     @Id @GeneratedValue
@@ -38,8 +36,8 @@ public class User extends TimeEntity {
 
     private Integer volunteerTime;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserInterest> userInterestList = new ArrayList<>();
+    @OneToMany
+    private Set<InterestCategory> interests = new HashSet<>();
 
     private String service;
 
@@ -57,7 +55,7 @@ public class User extends TimeEntity {
 
     @Builder
     public User(Long id, String name, String nickname, String profile, String socialId,
-                String phone, Byte userType, Byte status, Integer volunteerTime, List<UserInterest> userInterestList,
+                String phone, Byte userType, Byte status, Integer volunteerTime, Set<InterestCategory> interests,
                 String service, String memo, Byte locationAgree, Byte phoneAgree, String community,
                 LocalDateTime lastLogin, Byte isDelete) {
 
@@ -65,19 +63,18 @@ public class User extends TimeEntity {
         this.name=name;
         this.nickname=nickname;
         this.profile=profile;
-        this.socialId=socialId;
+        this.socialId="21500153@handong.edu";
         this.phone=phone;
-        this.userType=userType;
-        this.status=status;
-        this.volunteerTime=volunteerTime;
-        this.userInterestList=userInterestList;
+        this.userType=2;
+        this.status=1;
+        this.volunteerTime=0;
+        this.interests=interests;
         this.service=service;
         this.memo=memo;
-        this.locationAgree=locationAgree;
-        this.phoneAgree=phoneAgree;
+        this.locationAgree=0;
+        this.phoneAgree=0;
         this.community=community;
         this.lastLogin=lastLogin;
-        this.isDelete=isDelete;
+        this.isDelete=0;
     }
-
 }

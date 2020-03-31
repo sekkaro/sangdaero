@@ -14,7 +14,7 @@
         <ul>
             <li th:each="interest : ${interestList}">
                 <input type="checkbox"
-                       name="interest"
+                       name="userInterestList"
                        th:value="${interest.name}" />
                 <label th:text="${interest.name}"></label>
             </li>

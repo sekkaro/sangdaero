@@ -10,10 +10,11 @@
         유저 이름: <input type="text" name="name"> <br>
         닉네임: <input type="text" name="nickname"> <br>
         휴대폰: <input type="text" name="phone"> <br>
+        관심사:
         <ul>
             <li th:each="interest : ${interestList}">
                 <input type="checkbox"
-                       name="interest"
+                       name="userInterestList"
                        th:value="${interest.name}" />
                 <label th:text="${interest.name}"></label>
             </li>
@@ -21,26 +22,5 @@
 
         <input type="submit" value="등록">
     </form>
-
-
-
-    <tr th:each="interest : ${interestList}">
-        <td>
-            <a th:href="@{'/interest/add/' + ${interest.id}}">
-                <span th:text="${interest.name}"></span>
-            </a>
-        </td>
-        <td>
-            <a th:href="@{'/interest/edit/' + ${interest.id}}">
-                <button>수정</button>
-            </a>
-        </td>
-        <td>
-            <!--<form id="delete-form" th:action="@{'/interest/' + ${interest.id}}" method="post">-->
-            <input type="hidden" name="_method" value="delete"/>
-            <button id="delete-btn">삭제</button>
-            <!--</form>-->
-        </td>
-    </tr>
 </body>
 </html>
