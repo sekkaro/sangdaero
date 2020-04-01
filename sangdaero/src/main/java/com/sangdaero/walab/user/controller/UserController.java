@@ -3,6 +3,7 @@ package com.sangdaero.walab.user.controller;
 import com.sangdaero.walab.interest.application.DTO.InterestDTO;
 import com.sangdaero.walab.interest.application.service.InterestService;
 import com.sangdaero.walab.interest.domain.entity.InterestCategory;
+import com.sangdaero.walab.user.application.DTO.SimpleUser;
 import com.sangdaero.walab.user.application.DTO.UserDTO;
 import com.sangdaero.walab.user.application.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,9 @@ public class UserController {
 	}
 
 	@GetMapping("")
-	public String userPage() {
+	public String userPage(Model model) {
+		List<SimpleUser> simpleUsers = mUserService.getSimpleUserList();
+		model.addAttribute("simpleUserList", simpleUsers);
 		return "html/user/user.html";
 	}
 

@@ -18,6 +18,39 @@
   <a th:href="@{/user/add}">
     <button>유저추가</button>
   </a>
+  <hr>
+  <table>
+    <thead>
+    <tr>
+      <th class="ten wide">유저 이름</th>
+      <th class="two wide">닉네임</th>
+      <th class="two wide">유저타입</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- CONTENTS !-->
+    <tr th:each="userInfo : ${simpleUserList}">
+      <td>
+        <a th:href="@{'/interest/add/' + ${userInfo.name}}">
+          <span th:text="${userInfo.name}"></span>
+        </a>
+      </td>
+      <td>
+        <span th:text="${userInfo.nickname}"></span>
+      </td>
+      <td>
+        <span th:text="${userInfo.userType}"></span>
+      </td>
+      <td>
+        <!--<form id="delete-form" th:action="@{'/interest/' + ${interest.id}}" method="post">-->
+        <input type="hidden" name="_method" value="delete"/>
+        <button id="delete-btn">삭제</button>
+        <!--</form>-->
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
 <div lang="en" th:replace="common/footer :: footer"></div>
 

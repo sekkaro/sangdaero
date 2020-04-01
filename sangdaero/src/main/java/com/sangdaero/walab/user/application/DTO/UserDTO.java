@@ -1,6 +1,7 @@
 package com.sangdaero.walab.user.application.DTO;
 
 import com.sangdaero.walab.interest.domain.entity.InterestCategory;
+
 import com.sangdaero.walab.user.domain.entity.User;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class UserDTO {
     private Byte status;
     private Integer volunteerTime;
     private String[] userInterestList;
+//    private Set<UserInterest> interests = new HashSet<>();
     private Set<InterestCategory> interests = new HashSet<>();
     private String service;
     private String memo;

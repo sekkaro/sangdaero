@@ -3,6 +3,7 @@ package com.sangdaero.walab.user.domain.entity;
 import com.sangdaero.walab.common.board.domain.entity.TimeEntity;
 
 import com.sangdaero.walab.interest.domain.entity.InterestCategory;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +36,9 @@ public class User extends TimeEntity {
     private Byte status;
 
     private Integer volunteerTime;
+
+//    @OneToMany(mappedBy = "user")
+//    private Set<UserInterest> interests = new HashSet<>();
 
     @OneToMany
     private Set<InterestCategory> interests = new HashSet<>();

@@ -2,9 +2,12 @@ package com.sangdaero.walab.user.application.service;
 
 import com.sangdaero.walab.interest.domain.entity.InterestCategory;
 import com.sangdaero.walab.interest.domain.repository.InterestRepository;
+import com.sangdaero.walab.user.application.DTO.SimpleUser;
 import com.sangdaero.walab.user.application.DTO.UserDTO;
 import com.sangdaero.walab.user.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -23,5 +26,10 @@ public class UserService {
             userDTO.getInterests().add(interestList);
         }
         mUserRepository.save(userDTO.toEntity()).getId();
+    }
+
+    public List<SimpleUser> getSimpleUserList() {
+        List<SimpleUser> simpleUserList = mUserRepository.findAllByOrderByName();
+        return simpleUserList;
     }
 }
