@@ -2,15 +2,13 @@ package com.sangdaero.walab.user.domain.entity;
 
 import com.sangdaero.walab.common.board.domain.entity.TimeEntity;
 
-import com.sangdaero.walab.interest.domain.entity.InterestCategory;
-
+import com.sangdaero.walab.mapper.entity.UserInterest;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,11 +35,8 @@ public class User extends TimeEntity {
 
     private Integer volunteerTime;
 
-//    @OneToMany(mappedBy = "user")
-//    private Set<UserInterest> interests = new HashSet<>();
-
-    @OneToMany
-    private Set<InterestCategory> interests = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private List<UserInterest> userInterestList = new ArrayList<>();
 
     private String service;
 
@@ -59,7 +54,8 @@ public class User extends TimeEntity {
 
     @Builder
     public User(Long id, String name, String nickname, String profile, String socialId,
-                String phone, Byte userType, Byte status, Integer volunteerTime, Set<InterestCategory> interests,
+                String phone, Byte userType, Byte status, Integer volunteerTime,
+//                Set<InterestCategory> interests,
                 String service, String memo, Byte locationAgree, Byte phoneAgree, String community,
                 LocalDateTime lastLogin, Byte isDelete) {
 
@@ -72,7 +68,7 @@ public class User extends TimeEntity {
         this.userType=2;
         this.status=1;
         this.volunteerTime=0;
-        this.interests=interests;
+//        this.interests=interests;
         this.service=service;
         this.memo=memo;
         this.locationAgree=0;

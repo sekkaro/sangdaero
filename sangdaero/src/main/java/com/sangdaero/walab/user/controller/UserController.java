@@ -2,7 +2,6 @@ package com.sangdaero.walab.user.controller;
 
 import com.sangdaero.walab.interest.application.DTO.InterestDTO;
 import com.sangdaero.walab.interest.application.service.InterestService;
-import com.sangdaero.walab.interest.domain.entity.InterestCategory;
 import com.sangdaero.walab.user.application.DTO.SimpleUser;
 import com.sangdaero.walab.user.application.DTO.UserDTO;
 import com.sangdaero.walab.user.application.service.UserService;
@@ -45,5 +44,6 @@ public class UserController {
 		mUserService.addUser(userDTO);
 		return "redirect:/user";
 	}
+
 
 }

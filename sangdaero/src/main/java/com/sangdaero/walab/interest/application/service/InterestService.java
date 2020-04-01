@@ -2,6 +2,7 @@ package com.sangdaero.walab.interest.application.service;
 
 
 import com.sangdaero.walab.interest.application.DTO.InterestDTO;
+import com.sangdaero.walab.interest.application.DTO.InterestName;
 import com.sangdaero.walab.interest.domain.entity.InterestCategory;
 import com.sangdaero.walab.interest.domain.repository.InterestRepository;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class InterestService {
     }
 
     public List<InterestDTO> getInterestList() {
+//        List<InterestName> interestNames = mInterestRepository.findAllByOrderByName();
         List<InterestCategory> interestCategories = mInterestRepository.findAll();
 //        List<InterestCategory> interestCategories = mInterestRepository.findByTypeEquals(type);
         List<InterestDTO> interestDTOList = new ArrayList<>();
