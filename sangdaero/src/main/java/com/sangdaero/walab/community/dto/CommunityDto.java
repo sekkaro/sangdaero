@@ -1,4 +1,4 @@
-package com.sangdaero.walab.notice.dto;
+package com.sangdaero.walab.community.dto;
 
 
 
@@ -14,7 +14,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class NoticeDto {
+public class CommunityDto {
     private Long id;
     private String title;
     private String content;
@@ -26,7 +26,7 @@ public class NoticeDto {
     private LocalDateTime modifiedDate;
 
     public Board toEntity() {
-        Board notice = Board.builder()
+        Board board = Board.builder()
                 .id(id)
                 .title(title)
                 .content(content)
@@ -35,11 +35,11 @@ public class NoticeDto {
                 .topCategory(topCategory)
                 .subCategory(subCategory)
                 .build();
-        return notice;
+        return board;
     }
 
     @Builder
-    public NoticeDto(Long id, String title, String content, String writer, Long view, Byte topCategory, Long subCategory, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public CommunityDto(Long id, String title, String content, String writer, Long view, Byte topCategory, Long subCategory, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;

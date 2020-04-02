@@ -1,4 +1,4 @@
-package com.sangdaero.walab.notice.domain.repository;
+package com.sangdaero.walab.community.domain.repository;
 
 import java.util.List;
 
@@ -13,15 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sangdaero.walab.common.entity.Board;
 
-public interface NoticeRepository extends JpaRepository<Board, Long> {
+public interface CommunityRepository extends JpaRepository<Board, Long> {
 	
-	// Get notices without deleted
+	// Get communities without deleted
 	Page<Board> findAllBySubCategoryNotAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
-	// Get notices which fit to subCategory
+	// Get communities which fit to subCategory
 	Page<Board> findAllBySubCategoryAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
-	// Searching notices without deleted
+	// Searching communities without deleted
 	Page<Board> findAllByTitleContainingAndSubCategoryNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
-	// Searching notices which fit to subCategory
+	// Searching communities which fit to subCategory
 	Page<Board> findAllByTitleContainingAndSubCategoryAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
 	
 	Page<Board> findAllByContentContainingAndSubCategoryNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory, Pageable page);
@@ -31,13 +31,13 @@ public interface NoticeRepository extends JpaRepository<Board, Long> {
 	Page<Board> findAllByWriterContainingAndSubCategoryNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
 	
 	Page<Board> findAllByWriterContainingAndSubCategoryAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
-	// Get count of notices without deleted
+	// Get count of communities without deleted
 	Long countBySubCategoryNotAndTopCategoryEquals(Long subCategory, Byte topCategory);
-	// Get count of notices which fit to subCategory
+	// Get count of communities which fit to subCategory
 	Long countBySubCategoryAndTopCategoryEquals(Long subCategory, Byte topCategory);
-	// Get count of searched notices without deleted
+	// Get count of searched communities without deleted
 	Long countByTitleContainingAndSubCategoryNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
-	// Get count of searched notices which fit to subCategory
+	// Get count of searched communities which fit to subCategory
 	Long countByTitleContainingAndSubCategoryAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
 	
 	Long countByContentContainingAndSubCategoryNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory);
@@ -47,7 +47,7 @@ public interface NoticeRepository extends JpaRepository<Board, Long> {
 	Long countByWriterContainingAndSubCategoryNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
 	
 	Long countByWriterContainingAndSubCategoryAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
-	// Increasing view count when click notice
+	// Increasing view count when click community
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE board SET view=:view WHERE id=:id", nativeQuery = true)
@@ -55,6 +55,6 @@ public interface NoticeRepository extends JpaRepository<Board, Long> {
 	// Updating subCategory
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE board SET sub_category=:sub_category WHERE id=:id", nativeQuery = true)
-	void updateNoticeSubCategory(@Param("sub_category") Long subCategory, @Param("id") Long id);
+	@Query(value="UPDATE board SET sub_subCategory, Byte topCategory=:sub_subCategory, Byte topCategory WHERE id=:id", nativeQuery = true)
+	void updateCommunitySubCategory(@Param("sub_subCategory, Byte topCategory") Long subCategory, @Param("id") Long id);
 }

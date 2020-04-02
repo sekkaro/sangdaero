@@ -26,6 +26,7 @@ public class NoticeController {
 		this.mNoticeService = noticeService;
 	}
 	
+	// Notice list page
 	@GetMapping("")
 	public String list(
 			Model model,
@@ -45,21 +46,25 @@ public class NoticeController {
         return "html/notice/list.html";
     }
 
+	// Writing notice page
 	@GetMapping("/post")
     public String write() {
         return "html/notice/write.html";
     }
 
+	// Execute when click save button
     @PostMapping("/post")
     public String write(NoticeDto noticeDto) {
         mNoticeService.savePost(noticeDto);
         return "redirect:/notice";
     }
 
+    // Detail page of notice
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long id, Model model) {
         NoticeDto noticeDto = mNoticeService.getPost(id);
         
+        // Category with Korean which shows to detail page
         String category;
         
         switch(noticeDto.getSubCategory().toString()) {
@@ -84,6 +89,7 @@ public class NoticeController {
         return "html/notice/detail.html";
     }
 
+    // Edit page which through detail
     @GetMapping("/post/edit/{no}")
     public String edit(@PathVariable("no") Long id, Model model) {
         NoticeDto noticeDto = mNoticeService.getPost(id);
@@ -91,15 +97,14 @@ public class NoticeController {
         return "html/notice/update.html";
     }
 
+    // Saving edit content
     @PutMapping("/post/edit/{no}")
     public String update(NoticeDto noticeDto) {
-    	System.out.println("\n\n\n");
-    	System.out.println(noticeDto);
-    	System.out.println("\n\n\n");
         mNoticeService.updatePost(noticeDto);
         return "redirect:/notice";
     }
 
+    // Deleting notice
     @DeleteMapping("/post/{no}")
     public String delete(@PathVariable("no") Long id) {
         mNoticeService.deletePost(id);
@@ -107,12 +112,13 @@ public class NoticeController {
         return "redirect:/notice";
     }
 
-    @GetMapping("/search")
-    public String search(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "type") int searchType, Model model) {
-        List<NoticeDto> noticeDtoList = mNoticeService.searchPosts(keyword, searchType);
-        model.addAttribute("noticeList", noticeDtoList);
-
-        return "html/notice/list.html";
-    }
+	/*
+	 * @GetMapping("/search") public String search(@RequestParam(value = "keyword")
+	 * String keyword, @RequestParam(value = "type") int searchType, Model model) {
+	 * List<NoticeDto> noticeDtoList = mNoticeService.searchPosts(keyword,
+	 * searchType); model.addAttribute("noticeList", noticeDtoList);
+	 * 
+	 * return "html/notice/list.html"; }
+	 */
 	
 }

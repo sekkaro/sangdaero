@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.sangdaero.walab.common.board.domain.entity.Board;
+import com.sangdaero.walab.common.board.domain.entity.CommonBoard;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
-	List<Board> findByTitleContaining(String keyword);
+public interface BoardRepository extends JpaRepository<CommonBoard, Long> {
+	List<CommonBoard> findByTitleContaining(String keyword);
 }

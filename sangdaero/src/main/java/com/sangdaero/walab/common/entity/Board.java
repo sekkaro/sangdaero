@@ -1,4 +1,4 @@
-package com.sangdaero.walab.notice.domain.entity;
+package com.sangdaero.walab.common.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,7 +17,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicInsert
-public class Notice extends TimeEntity {
+public class Board extends TimeEntity {
 
     @Id
     @GeneratedValue
@@ -51,7 +51,7 @@ public class Notice extends TimeEntity {
     private Byte qna;
 
     @Builder
-    public Notice(Long id, String title, String content, String writer, Long view, Byte topCategory, Long subCategory) {
+    public Board(Long id, String title, String content, String writer, Long view, Byte topCategory, Long subCategory) {
         this.id = id;
         this.title = title;
         this.content = content;

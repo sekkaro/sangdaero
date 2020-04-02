@@ -4,7 +4,7 @@ package com.sangdaero.walab.common.board.dto;
 
 import java.time.LocalDateTime;
 
-import com.sangdaero.walab.common.board.domain.entity.Board;
+import com.sangdaero.walab.common.board.domain.entity.CommonBoard;
 
 import lombok.*;
 
@@ -21,8 +21,8 @@ public class BoardDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public Board toEntity() {
-        Board build = Board.builder()
+    public CommonBoard toEntity() {
+        CommonBoard build = CommonBoard.builder()
                 .id(id)
                 .writer(writer)
                 .title(title)

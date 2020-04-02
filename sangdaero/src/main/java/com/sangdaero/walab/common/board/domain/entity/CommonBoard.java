@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Board extends TimeEntity {
+public class CommonBoard extends CommonTimeEntity {
 
     @Id @GeneratedValue
     private Long id;
@@ -28,7 +28,7 @@ public class Board extends TimeEntity {
     private String content;
 
     @Builder
-    public Board(Long id, String title, String content, String writer) {
+    public CommonBoard(Long id, String title, String content, String writer) {
         this.id = id;
         this.title = title;
         this.content = content;

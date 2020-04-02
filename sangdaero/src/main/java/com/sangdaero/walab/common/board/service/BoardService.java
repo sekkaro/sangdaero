@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.sangdaero.walab.common.board.domain.entity.Board;
+import com.sangdaero.walab.common.board.domain.entity.CommonBoard;
 import com.sangdaero.walab.common.board.domain.repository.BoardRepository;
 import com.sangdaero.walab.common.board.dto.BoardDto;
 
@@ -32,15 +32,15 @@ public class BoardService {
 
     public List<BoardDto> getBoardlist(Integer pageNum) {
 
-        Page<Board> page = boardRepository
+        Page<CommonBoard> page = boardRepository
                 .findAll(PageRequest
                         .of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
 
         //List<Board> boards = boardRepository.findAll();
-        List<Board> boards = page.getContent();
+        List<CommonBoard> boards = page.getContent();
         List<BoardDto> boardDtoList = new ArrayList<>();
 
-        for(Board board : boards) {
+        for(CommonBoard board : boards) {
             boardDtoList.add(this.convertEntityToDto(board));
         }
 
@@ -77,8 +77,8 @@ public class BoardService {
     }
 
     public BoardDto getPost(Long id) {
-        Optional<Board> boardWrapper = boardRepository.findById(id);
-        Board board = boardWrapper.get();
+        Optional<CommonBoard> boardWrapper = boardRepository.findById(id);
+        CommonBoard board = boardWrapper.get();
 
         BoardDto boardDto = BoardDto.builder()
                 .id(board.getId())
@@ -96,19 +96,19 @@ public class BoardService {
     }
 
     public List<BoardDto> searchPosts(String keyword) {
-        List<Board> boards = boardRepository.findByTitleContaining(keyword);
+        List<CommonBoard> boards = boardRepository.findByTitleContaining(keyword);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         if(boards.isEmpty()) return boardDtoList;
 
-        for(Board board : boards) {
+        for(CommonBoard board : boards) {
             boardDtoList.add(this.convertEntityToDto(board));
         }
 
         return boardDtoList;
     }
 
-    private BoardDto convertEntityToDto(Board board) {
+    private BoardDto convertEntityToDto(CommonBoard board) {
         return BoardDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
