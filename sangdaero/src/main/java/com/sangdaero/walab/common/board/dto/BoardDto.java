@@ -1,13 +1,10 @@
 package com.sangdaero.walab.common.board.dto;
 
-
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 import com.sangdaero.walab.common.board.domain.entity.Board;
-
-import lombok.*;
-
 
 @Getter
 @Setter
