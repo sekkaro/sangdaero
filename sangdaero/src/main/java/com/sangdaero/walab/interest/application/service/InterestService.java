@@ -5,6 +5,7 @@ import com.sangdaero.walab.interest.application.DTO.InterestDTO;
 import com.sangdaero.walab.interest.application.DTO.InterestName;
 import com.sangdaero.walab.interest.domain.entity.InterestCategory;
 import com.sangdaero.walab.interest.domain.repository.InterestRepository;
+import com.sangdaero.walab.mapper.repository.UserInterestRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ import java.util.Optional;
 public class InterestService {
 
     private InterestRepository mInterestRepository;
+    private UserInterestRepository mUserInterestRepository;
 
-    public InterestService(InterestRepository interestRepository) {
+    public InterestService(InterestRepository interestRepository, UserInterestRepository mUserInterestRepository) {
         this.mInterestRepository = interestRepository;
+        this.mUserInterestRepository = mUserInterestRepository;
     }
 
     public Long addInterest(InterestDTO interestDto) {
@@ -38,6 +41,7 @@ public class InterestService {
                     .on_off(interestCategory.getOn_off())
                     .createdDate(interestCategory.getCreatedDate())
                     .modifiedDate(interestCategory.getModifiedDate())
+                    .count(mUserInterestRepository.countByInterest_Id(interestCategory.getId()))
                     .build();
 
             interestDTOList.add(interestDTO);
