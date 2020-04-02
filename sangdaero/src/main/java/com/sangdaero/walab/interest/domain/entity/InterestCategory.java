@@ -1,6 +1,6 @@
 package com.sangdaero.walab.interest.domain.entity;
 
-import com.sangdaero.walab.common.board.domain.entity.TimeEntity;
+import com.sangdaero.walab.common.entity.TimeEntity;
 import com.sangdaero.walab.mapper.entity.UserInterest;
 import lombok.*;
 

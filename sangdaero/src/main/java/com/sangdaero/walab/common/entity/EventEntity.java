@@ -1,4 +1,4 @@
-package com.sangdaero.walab.common.board.domain.entity;
+package com.sangdaero.walab.common.entity;
 
 import java.time.LocalDateTime;
 

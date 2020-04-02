@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import com.sangdaero.walab.common.board.domain.entity.TimeEntity;
+import com.sangdaero.walab.common.entity.TimeEntity;
 
 import lombok.AccessLevel;
 import lombok.Builder;

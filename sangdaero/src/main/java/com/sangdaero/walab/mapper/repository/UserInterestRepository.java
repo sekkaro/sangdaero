@@ -12,6 +12,6 @@ public interface UserInterestRepository extends JpaRepository<UserInterest, User
 
     Long countByInterest_Id(Long id);
 
-    List<UserInterest> findByUser(Long id);
+    List<UserInterest> findByUser_Id(Long id);
 
 }

@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.sangdaero.walab.common.board.domain.entity.EventEntity;
+import com.sangdaero.walab.common.entity.EventEntity;
 import com.sangdaero.walab.payment.domain.repository.PaymentRepository;
 import com.sangdaero.walab.payment.dto.PaymentDto;
 

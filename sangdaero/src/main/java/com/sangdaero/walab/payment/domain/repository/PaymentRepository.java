@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.sangdaero.walab.common.board.domain.entity.EventEntity;
+import com.sangdaero.walab.common.entity.EventEntity;
 
 
 // A /\ (B \/ C) <=> (A /\ B) \/ (A /\ C)

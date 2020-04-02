@@ -15,7 +15,7 @@
     <hr>
     타입:
     <h3 th:if="${userInfo.userType==1}" th:text="관제사"></h3>
-    <h3 th:if="${userInfo.userType==2}" th:text="이용자"></h3>
+    <h3 th:if="${userInfo.userType==0}" th:text="이용자"></h3>
     <hr>
     봉사 시간: <h3 th:text="${userInfo.volunteerTime}"></h3>
     <hr>

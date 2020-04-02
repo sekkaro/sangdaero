@@ -2,7 +2,7 @@ package com.sangdaero.walab.payment.dto;
 
 import java.time.LocalDateTime;
 
-import com.sangdaero.walab.common.board.domain.entity.EventEntity;
+import com.sangdaero.walab.common.entity.EventEntity;
 
 import lombok.Builder;
 import lombok.Getter;

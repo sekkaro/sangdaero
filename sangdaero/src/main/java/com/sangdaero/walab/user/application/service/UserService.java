@@ -13,14 +13,11 @@ import com.sangdaero.walab.interest.domain.entity.InterestCategory;
 import com.sangdaero.walab.interest.domain.repository.InterestRepository;
 import com.sangdaero.walab.mapper.entity.UserInterest;
 import com.sangdaero.walab.mapper.repository.UserInterestRepository;
-import com.sangdaero.walab.user.application.DTO.SimpleUser;
-import com.sangdaero.walab.user.application.DTO.UserDTO;
-import com.sangdaero.walab.user.application.DTO.UserDetailDTO;
-import com.sangdaero.walab.user.domain.entity.User;
+import com.sangdaero.walab.user.application.dto.SimpleUser;
+import com.sangdaero.walab.user.application.dto.UserDetailDto;
+import com.sangdaero.walab.user.application.dto.UserDto;
 import com.sangdaero.walab.user.domain.repository.UserRepository;
 import com.sangdaero.walab.common.entity.User;
-import com.sangdaero.walab.user.application.dto.UserDto;
-import com.sangdaero.walab.user.repository.UserRepository;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -33,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService extends OidcUserService {
 	
-	  private InterestRepository mInterestRepository;
+	private InterestRepository mInterestRepository;
     private UserRepository mUserRepository;
     private UserInterestRepository mUserInterestRepository;
 
@@ -49,8 +46,7 @@ public class UserService extends OidcUserService {
         Map attributes = oidcUser.getAttributes();
         UserDto userDto = new UserDto();
         userDto.setName((String) attributes.get("name"));
-        userDto.setNickName((String) attributes.get("nickname"));
-        userDto.setProfile((String) attributes.get("picture"));
+        userDto.setNickname((String) attributes.get("nickname"));
         userDto.setSocialId((String) attributes.get("sub"));
         userDto.setPhone((String) attributes.get("phone_number"));
         
@@ -81,17 +77,17 @@ public class UserService extends OidcUserService {
     	User user = mUserRepository.findBySocialId(principal.getAttribute("sub"));
     	
     	if(isOn) {
-    		user.setStatus(1);
+    		user.setStatus((byte) 1);
     	}
     	else {
-    		user.setStatus(0);
+    		user.setStatus((byte) 0);
     	}
     	
     	mUserRepository.save(user);
     	
     }
 
-    public void addUser(UserDTO userDTO) {
+    public void addUser(UserDto userDTO) {
 
         for (String e :userDTO.getUserInterestList()) {
             InterestCategory interestList = mInterestRepository.findByNameEquals(e);
@@ -117,12 +113,12 @@ public class UserService extends OidcUserService {
     }
 
 
-    public UserDetailDTO getUser(Long id) {
+    public UserDetailDto getUser(Long id) {
         Optional<User> userWrapper = mUserRepository.findById(id);
 
         User user = userWrapper.get();
 
-        List<UserInterest> byUser_id = mUserInterestRepository.findByUser(user.getId());
+        List<UserInterest> byUser_id = mUserInterestRepository.findByUser_Id(user.getId());
 
         Set<String> interestName = new HashSet<>();
 
@@ -131,7 +127,7 @@ public class UserService extends OidcUserService {
             interestName.add(byId.get().getName());
         }
 
-        UserDetailDTO userDetailDTO = UserDetailDTO.builder()
+        UserDetailDto userDetailDTO = UserDetailDto.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .nickname(user.getNickname())
@@ -149,20 +145,11 @@ public class UserService extends OidcUserService {
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
-                .nickName(user.getNickName())
-                .profile(user.getProfile())
+                .nickname(user.getNickname())
                 .socialId(user.getSocialId())
                 .phone(user.getPhone())
                 .userType(user.getUserType())
                 .status(user.getStatus())
-                .volunteerTime(user.getVolunteerTime())
-                .interest(user.getInterest())
-                .service(user.getService())
-                .memo(user.getMemo())
-                .locationAgree(user.getLocationAgree())
-                .phoneAgree(user.getPhoneAgree())
-                .community(user.getCommunity())
-                .lastLogin(user.getLastLogin())
                 .build();
     }
 

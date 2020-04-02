@@ -1,4 +1,4 @@
-package com.sangdaero.walab.common.board.domain.entity;
+package com.sangdaero.walab.common.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
