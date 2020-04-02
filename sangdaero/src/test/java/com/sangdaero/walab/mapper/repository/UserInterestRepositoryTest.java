@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +28,48 @@ public class UserInterestRepositoryTest {
 
     @Autowired
     UserRepository userRepository;
+
+    @Test
+    public void findByUserId() {
+        InterestCategory category = new InterestCategory();
+        category.setName("운전");
+        InterestCategory category1 = new InterestCategory();
+        category1.setName("나눔");
+
+        interestRepository.save(category);
+        interestRepository.save(category1);
+
+        User user = new User();
+        user.setName("준서");
+        User user1 = new User();
+        user1.setName("준범");
+
+        userRepository.save(user);
+        userRepository.save(user1);
+
+        UserInterest userInterest = new UserInterest();
+        userInterest.setInterest(category);
+        userInterest.setUser(user);
+
+        UserInterest userInterest1 = new UserInterest();
+        userInterest1.setInterest(category1);
+        userInterest1.setUser(user);
+
+        UserInterest userInterest2 = new UserInterest();
+        userInterest2.setInterest(category);
+        userInterest2.setUser(user1);
+
+        repository.save(userInterest);
+        repository.save(userInterest1);
+        repository.save(userInterest2);
+
+        List<UserInterest> byUser_id = repository.findByUser_Id(user.getId());
+        System.out.println("=========================");
+        for(UserInterest e : byUser_id) {
+            Optional<InterestCategory> byId = interestRepository.findById(e.getInterest().getId());
+            System.out.println(byId.get().getName());
+        }
+    }
 
     @Test
     public void count() {
