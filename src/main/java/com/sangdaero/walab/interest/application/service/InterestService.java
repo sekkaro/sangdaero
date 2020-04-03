@@ -1,9 +1,9 @@
 package com.sangdaero.walab.interest.application.service;
 
 
-import com.sangdaero.walab.interest.application.DTO.InterestDTO;
-import com.sangdaero.walab.interest.application.DTO.InterestName;
 import com.sangdaero.walab.common.entity.InterestCategory;
+import com.sangdaero.walab.interest.application.dto.InterestDto;
+import com.sangdaero.walab.interest.application.dto.InterestName;
 import com.sangdaero.walab.interest.domain.repository.InterestRepository;
 import com.sangdaero.walab.mapper.repository.UserInterestRepository;
 import org.springframework.stereotype.Service;
@@ -23,18 +23,18 @@ public class InterestService {
         this.mUserInterestRepository = mUserInterestRepository;
     }
 
-    public Long addInterest(InterestDTO interestDto) {
+    public Long addInterest(InterestDto interestDto) {
         return mInterestRepository.save(interestDto.toEntity()).getId();
     }
 
-    public List<InterestDTO> getInterestList() {
+    public List<InterestDto> getInterestList() {
 //        List<InterestName> interestNames = mInterestRepository.findAllByOrderByName();
         List<InterestCategory> interestCategories = mInterestRepository.findAll();
 //        List<InterestCategory> interestCategories = mInterestRepository.findByTypeEquals(type);
-        List<InterestDTO> interestDTOList = new ArrayList<>();
+        List<InterestDto> interestDTOList = new ArrayList<>();
 
         for(InterestCategory interestCategory: interestCategories) {
-            InterestDTO interestDTO = InterestDTO.builder()
+            InterestDto interestDTO = InterestDto.builder()
                     .id(interestCategory.getId())
                     .name(interestCategory.getName())
                     .type(interestCategory.getType())
@@ -49,11 +49,11 @@ public class InterestService {
         return interestDTOList;
     }
 
-    public InterestDTO getInterest(Long id) {
+    public InterestDto getInterest(Long id) {
         Optional<InterestCategory> interestWrapper = mInterestRepository.findById(id);
         InterestCategory interestCategory = interestWrapper.get();
 
-        InterestDTO interestDTO = InterestDTO.builder()
+        InterestDto interestDTO = InterestDto.builder()
                 .id(interestCategory.getId())
                 .name(interestCategory.getName())
                 .type(interestCategory.getType())

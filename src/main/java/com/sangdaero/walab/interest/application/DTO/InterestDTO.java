@@ -1,4 +1,4 @@
-package com.sangdaero.walab.interest.application.DTO;
+package com.sangdaero.walab.interest.application.dto;
 
 import com.sangdaero.walab.common.entity.InterestCategory;
 import lombok.*;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class InterestDTO {
+public class InterestDto {
     private Long id;
     private String name;
     private Byte type;
@@ -29,7 +29,7 @@ public class InterestDTO {
     }
 
     @Builder
-    public InterestDTO(Long id, String name, Byte type, Byte on_off, Long count, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public InterestDto(Long id, String name, Byte type, Byte on_off, Long count, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.name = name;
         this.type = type;

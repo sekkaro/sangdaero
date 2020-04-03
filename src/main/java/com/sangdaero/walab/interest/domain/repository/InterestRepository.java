@@ -1,7 +1,8 @@
 package com.sangdaero.walab.interest.domain.repository;
 
-import com.sangdaero.walab.interest.application.DTO.InterestName;
 import com.sangdaero.walab.common.entity.InterestCategory;
+import com.sangdaero.walab.interest.application.dto.InterestName;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

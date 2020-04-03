@@ -1,4 +1,4 @@
-package com.sangdaero.walab.interest.application.DTO;
+package com.sangdaero.walab.interest.application.dto;
 
 public interface InterestName {
 

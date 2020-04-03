@@ -40,7 +40,7 @@ public class PaymentController {
 //		PaymentNoticeDto mPaymentNoticeDto = mPaymentNoticeService.getPaymentNoticeDto();
 //		model.addAttribute("paymentNoticeDto", mPaymentNoticeDto);
 
-		return "payment/payment.html";
+		return "html/payment/payment.html";
 	}
 	
 	
@@ -54,14 +54,14 @@ public class PaymentController {
 		// 리스트 화면으로 돌아갔을 때 select가 유지되게 하는 데 필요한 변수
 		model.addAttribute("sortBy", sortBy);
 		
-		return "payment/payment.html";
+		return "html/payment/payment.html";
 	}
 	
 	// go to write form
 	@GetMapping("/paymentForm") 
 	public String paymentWrite() {
 
-		return "payment/paymentForm.html";
+		return "html/payment/paymentForm.html";
 	}
 	
 	// write action
@@ -80,7 +80,7 @@ public class PaymentController {
 		PaymentDto paymentDto = mPaymentService.getSinglePaymentById(no);
 		model.addAttribute("paymentDto", paymentDto);
 
-		return "payment/paymentDetail.html";
+		return "html/payment/paymentDetail.html";
 	}
 	
 	// go to update form
@@ -90,7 +90,7 @@ public class PaymentController {
 		PaymentDto paymentDto = mPaymentService.getSinglePaymentById(no);
 		model.addAttribute("paymentDto", paymentDto);
 		
-		return "payment/paymentUpdate.html";
+		return "html/payment/paymentUpdate.html";
 	}
 	
 	// update action

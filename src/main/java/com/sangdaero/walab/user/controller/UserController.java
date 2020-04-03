@@ -1,7 +1,7 @@
 package com.sangdaero.walab.user.controller;
 
 import com.sangdaero.walab.common.board.dto.BoardDto;
-import com.sangdaero.walab.interest.application.DTO.InterestDTO;
+import com.sangdaero.walab.interest.application.dto.InterestDto;
 import com.sangdaero.walab.interest.application.service.InterestService;
 import com.sangdaero.walab.user.application.dto.SimpleUser;
 import com.sangdaero.walab.user.application.dto.UserDto;
@@ -37,7 +37,7 @@ public class UserController {
 
 	@GetMapping("/add")
 	public String add(Model model) {
-		List<InterestDTO> interestDTOList = mInterestService.getInterestList();
+		List<InterestDto> interestDTOList = mInterestService.getInterestList();
 		model.addAttribute("interestList", interestDTOList);
 		return "html/user/add.html";
 	}

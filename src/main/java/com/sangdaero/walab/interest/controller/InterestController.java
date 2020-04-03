@@ -1,6 +1,6 @@
 package com.sangdaero.walab.interest.controller;
 
-import com.sangdaero.walab.interest.application.DTO.InterestDTO;
+import com.sangdaero.walab.interest.application.dto.InterestDto;
 import com.sangdaero.walab.interest.application.service.InterestService;
 import com.sangdaero.walab.user.application.dto.SimpleUser;
 
@@ -24,7 +24,7 @@ public class InterestController {
 	@GetMapping("")
 	public String interestPage(Model model) {
 //		List<InterestDTO> interestDTOList = mInterestService.getInterestList(type);
-		List<InterestDTO> interestDTOList = mInterestService.getInterestList();
+		List<InterestDto> interestDTOList = mInterestService.getInterestList();
 		model.addAttribute("interestList", interestDTOList);
 		return "html/interest/interest.html";
 	}
@@ -35,7 +35,7 @@ public class InterestController {
 	}
 
 	@PostMapping("/add")
-	public String addInterest(InterestDTO interestDto) {
+	public String addInterest(InterestDto interestDto) {
 		System.out.println(interestDto);
 		mInterestService.addInterest(interestDto);
 		return "redirect:/interest";
@@ -43,14 +43,14 @@ public class InterestController {
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
-		InterestDTO interestDTO = mInterestService.getInterest(id);
+		InterestDto interestDTO = mInterestService.getInterest(id);
 
 		model.addAttribute("interestDTO", interestDTO);
 		return "html/interest/update.html";
 	}
 
 	@PutMapping("/edit/{id}")
-	public String update(InterestDTO interestDTO) {
+	public String update(InterestDto interestDTO) {
 		System.out.println(interestDTO);
 		mInterestService.addInterest(interestDTO);
 		return "redirect:/interest";
