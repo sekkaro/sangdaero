@@ -26,7 +26,6 @@ public class CommunityController {
 		this.mCommunityService = communityService;
 	}
 	// Community list page
-	
 	@GetMapping("")
 	public String list(
 			Model model,
