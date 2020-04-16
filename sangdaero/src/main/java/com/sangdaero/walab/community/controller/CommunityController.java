@@ -27,6 +27,7 @@ public class CommunityController {
 	}
 	
 	// Community list page
+	
 	@GetMapping("")
 	public String list(
 			Model model,
