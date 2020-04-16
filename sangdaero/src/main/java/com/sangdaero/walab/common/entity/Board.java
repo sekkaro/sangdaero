@@ -43,6 +43,7 @@ public class Board extends TimeEntity {
     @Column(name="top_category", columnDefinition="TINYINT", length = 1, nullable = false)
     private Byte topCategory;
     
+    // many to one
     @Column(name="category_id", nullable = false)
     private Long categoryId;
     

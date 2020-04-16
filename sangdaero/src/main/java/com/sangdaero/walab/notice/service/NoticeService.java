@@ -6,6 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.sangdaero.walab.common.category.repository.CategoryRepository;
+import com.sangdaero.walab.common.category.service.CategoryService;
 import com.sangdaero.walab.common.entity.Board;
 import com.sangdaero.walab.notice.domain.repository.NoticeRepository;
 import com.sangdaero.walab.notice.dto.NoticeDto;
@@ -16,14 +18,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NoticeService {
+public class NoticeService extends CategoryService {
 
     private NoticeRepository mNoticeRepository;
     private static final int BLOCK_PAGE_NUMCOUNT = 6; // 블럭에 존재하는 페이지 수
     private static final int PAGE_POSTCOUNT = 3;  // 한 페이지에 존재하는 게시글 수
     private static final Byte topCategory = 1;
 
-    public NoticeService(NoticeRepository noticeRepository) {
+    public NoticeService(NoticeRepository noticeRepository, CategoryRepository categoryRepository) {
+    	super(categoryRepository);
         this.mNoticeRepository = noticeRepository;
     }
     
@@ -100,11 +103,6 @@ public class NoticeService {
     		default:
     			if (categoryId == 1) {
             		Long deleted = (long) 0;
-            		
-            		System.out.println("\n\n");
-    				System.out.println(deleted);
-    				System.out.println(topCategory);
-    				System.out.println("\n\n");
             		page = mNoticeRepository.findAllByCategoryIdNotAndTopCategoryEquals(deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
             	} else {
@@ -153,7 +151,6 @@ public class NoticeService {
     
 
     public Long getNoticeCount(Long categoryId, String keyword, Integer searchType) {
-    	
     	switch(searchType) {
     		case 1:
     			if (categoryId == 1) {
@@ -179,12 +176,6 @@ public class NoticeService {
     		default:
     			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    				
-    				System.out.println("\n\n");
-    				System.out.println(deleted);
-    				System.out.println(topCategory);
-    				System.out.println("\n\n");
-    				
     	    		return mNoticeRepository.countByCategoryIdNotAndTopCategoryEquals(deleted, topCategory);
     	    	} else {
     	    		return mNoticeRepository.countByCategoryIdAndTopCategoryEquals(categoryId, topCategory);
@@ -213,21 +204,4 @@ public class NoticeService {
 
         return noticeDto;
     }
-    
-	/*
-	 * // Search post public List<NoticeDto> searchPosts(String keyword, int
-	 * searchType) { Page<Notice> page;
-	 * 
-	 * switch(searchType) { case 1: List<Notice> notices =
-	 * mNoticeRepository.findByTitleContaining(keyword); break; } List<Notice>
-	 * notices = mNoticeRepository.findByTitleContaining(keyword); List<NoticeDto>
-	 * noticeDtoList = new ArrayList<>();
-	 * 
-	 * if(notices.isEmpty()) return noticeDtoList;
-	 * 
-	 * for(Notice Notice : notices) {
-	 * noticeDtoList.add(this.convertEntityToDto(Notice)); }
-	 * 
-	 * return noticeDtoList; }
-	 */
 }

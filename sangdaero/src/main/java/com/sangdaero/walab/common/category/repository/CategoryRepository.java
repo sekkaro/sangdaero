@@ -1,4 +1,4 @@
-package com.sangdaero.walab.community.domain.repository;
+package com.sangdaero.walab.common.category.repository;
 
 import java.util.List;
 

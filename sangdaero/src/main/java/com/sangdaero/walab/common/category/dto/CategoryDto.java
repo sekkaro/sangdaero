@@ -1,4 +1,4 @@
-package com.sangdaero.walab.community.dto;
+package com.sangdaero.walab.common.category.dto;
 
 import java.time.LocalDateTime;
 

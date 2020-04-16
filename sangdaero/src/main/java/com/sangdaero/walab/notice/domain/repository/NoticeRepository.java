@@ -55,6 +55,6 @@ public interface NoticeRepository extends JpaRepository<Board, Long> {
 	// Updating subCategory
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE board SET sub_category=:sub_category WHERE id=:id", nativeQuery = true)
-	void updateNoticeCategoryId(@Param("sub_category") Long subCategory, @Param("id") Long id);
+	@Query(value="UPDATE board SET category_id=:categoryId WHERE id=:id", nativeQuery = true)
+	void updateNoticeCategoryId(@Param("categoryId") Long subCategory, @Param("id") Long id);
 }

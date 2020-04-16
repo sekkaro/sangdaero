@@ -6,11 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.sangdaero.walab.common.category.dto.CategoryDto;
+import com.sangdaero.walab.common.category.repository.CategoryRepository;
+import com.sangdaero.walab.common.category.service.CategoryService;
 import com.sangdaero.walab.common.entity.Board;
 import com.sangdaero.walab.common.entity.BoardCategory;
-import com.sangdaero.walab.community.domain.repository.CategoryRepository;
 import com.sangdaero.walab.community.domain.repository.CommunityRepository;
-import com.sangdaero.walab.community.dto.CategoryDto;
 import com.sangdaero.walab.community.dto.CommunityDto;
 
 import javax.transaction.Transactional;
@@ -19,17 +20,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommunityService {
+public class CommunityService extends CategoryService {
 
     private CommunityRepository mCommunityRepository;
-    private CategoryRepository mCategoryRepository;
     private static final int BLOCK_PAGE_NUMCOUNT = 6; // 블럭에 존재하는 페이지 수
     private static final int PAGE_POSTCOUNT = 3;  // 한 페이지에 존재하는 게시글 수
     private static final Byte topCategory = 2;
 
     public CommunityService(CommunityRepository communityRepository, CategoryRepository categoryRepository) {
-        this.mCommunityRepository = communityRepository;
-        this.mCategoryRepository = categoryRepository;
+    	super(categoryRepository);
+    	this.mCommunityRepository = communityRepository;
     }
     
     // Convert Community Entity to DTO
@@ -47,19 +47,6 @@ public class CommunityService {
                 .build();
     }
 
-    // Convert Category Entity to DTO
-    private CategoryDto convertEntityToDto(BoardCategory category) {
-        return CategoryDto.builder()
-                .id(category.getId())
-                .topCategory(category.getTopCategory())
-                .status(category.getStatus())
-                .memo(category.getMemo())
-                .communityManager(category.getCommunityManager())
-                .createdDate(category.getCreatedDate())
-                .modifiedDate(category.getModifiedDate())
-                .build();
-    }
-    
     // Save post
     public Long savePost(CommunityDto communityDto) {
         return mCommunityRepository.save(communityDto.toEntity()).getId();
@@ -218,59 +205,5 @@ public class CommunityService {
                 .build();
 
         return communityDto;
-    }
-    
-    // Save category
-    public Long saveCategory(CategoryDto categoryDto) {
-        return mCategoryRepository.save(categoryDto.toEntity()).getId();
-    }
-    
-    // Update category
-    public Long updateCategory(CategoryDto categoryDto) {
-        return mCategoryRepository.save(categoryDto.toEntity()).getId();
-    }
-    
-    // Delete category
-    public void deleteCategory(Long id) {
-    	Byte delete = 0;
-		mCategoryRepository.updateCommunityCategoryId(delete, id);
-    }
-    
-    public List<CategoryDto> getCategory(Byte topCategory) {
-    	List<BoardCategory> boardCategories;
-    	
-    	if (topCategory != 0) {
-    		boardCategories = mCategoryRepository.findAllByTopCategory(topCategory);
-    	} else {
-    		boardCategories = mCategoryRepository.findAll();
-    	}
-    	
-    	List<CategoryDto> categoryDtoList = new ArrayList<CategoryDto>();
-    	
-    	for(BoardCategory boardCategory : boardCategories) {
-    		categoryDtoList.add(this.convertEntityToDto(boardCategory));
-    	}
-    	
-    	return categoryDtoList;
-    	
-    }
-    
-    // Detail of id's category
-    public CategoryDto getCategoryDetail(Long id) {
-        Optional<BoardCategory> CategoryWrapper = mCategoryRepository.findById(id);
-        System.out.println("\n\n"+CategoryWrapper+"\n\n");
-        BoardCategory category = CategoryWrapper.get();
-
-        CategoryDto categoryDto = CategoryDto.builder()
-                .id(category.getId())
-                .topCategory(category.getTopCategory())
-                .status(category.getStatus())
-                .memo(category.getMemo())
-                .communityManager(category.getCommunityManager())
-                .createdDate(category.getCreatedDate())
-                .modifiedDate(category.getModifiedDate())
-                .build();
-
-        return categoryDto;
     }
 }

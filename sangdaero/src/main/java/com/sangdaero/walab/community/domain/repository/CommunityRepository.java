@@ -56,6 +56,6 @@ public interface CommunityRepository extends JpaRepository<Board, Long> {
 	// Updating categoryId
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE board SET sub_category=:categoryId WHERE id=:id", nativeQuery = true)
+	@Query(value="UPDATE board SET category_id=:categoryId WHERE id=:id", nativeQuery = true)
 	void updateCommunityCategoryId(@Param("categoryId") Long categoryId, @Param("id") Long id);
 }

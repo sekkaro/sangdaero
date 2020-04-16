@@ -13,16 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sangdaero.walab.common.board.dto.BoardDto;
+import com.sangdaero.walab.common.category.controller.CategoryController;
+import com.sangdaero.walab.common.category.dto.CategoryDto;
 import com.sangdaero.walab.notice.dto.NoticeDto;
 import com.sangdaero.walab.notice.service.NoticeService;
 
 @Controller
 @RequestMapping("/notice")
-public class NoticeController {
+public class NoticeController extends CategoryController {
 	
 	private NoticeService mNoticeService;
 	
 	public NoticeController(NoticeService noticeService) {
+		super(noticeService);
 		this.mNoticeService = noticeService;
 	}
 	
@@ -34,9 +37,13 @@ public class NoticeController {
 			@RequestParam(value = "category", defaultValue = "1") Long category,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword,
 			@RequestParam(value = "type", defaultValue = "0") Integer searchType) {
+		
         List<NoticeDto> noticeDtoList = mNoticeService.getNoticelist(pageNum, category, keyword, searchType);
         Integer[] pageList = mNoticeService.getPageList(pageNum, category, keyword, searchType);
+        
+        List<CategoryDto> categoryDtoList = mNoticeService.getCategory((byte)1);
 
+        model.addAttribute("categoryList", categoryDtoList);
         model.addAttribute("noticeList", noticeDtoList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("category", category);
@@ -67,6 +74,7 @@ public class NoticeController {
         // Category with Korean which shows to detail page
         String category;
         
+        // 수정 필요
         switch(noticeDto.getCategoryId().toString()) {
 	        case "1":
 	        	category = "전체";
@@ -93,7 +101,10 @@ public class NoticeController {
     @GetMapping("/post/edit/{no}")
     public String edit(@PathVariable("no") Long id, Model model) {
         NoticeDto noticeDto = mNoticeService.getPost(id);
+        List<CategoryDto> categoryDtoList = mNoticeService.getCategory((byte)1);
+		
         model.addAttribute("noticeDto", noticeDto);
+        model.addAttribute("categoryDto", categoryDtoList);
         return "html/notice/update.html";
     }
 
@@ -111,14 +122,4 @@ public class NoticeController {
 
         return "redirect:/notice";
     }
-
-	/*
-	 * @GetMapping("/search") public String search(@RequestParam(value = "keyword")
-	 * String keyword, @RequestParam(value = "type") int searchType, Model model) {
-	 * List<NoticeDto> noticeDtoList = mNoticeService.searchPosts(keyword,
-	 * searchType); model.addAttribute("noticeList", noticeDtoList);
-	 * 
-	 * return "html/notice/list.html"; }
-	 */
-	
 }
