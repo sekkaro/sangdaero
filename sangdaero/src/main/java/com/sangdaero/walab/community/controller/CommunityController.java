@@ -20,6 +20,7 @@ import com.sangdaero.walab.community.service.CommunityService;
 @RequestMapping("/community")
 public class CommunityController {
 	
+	
 	private CommunityService mCommunityService;
 	
 	public CommunityController(CommunityService communityService) {
