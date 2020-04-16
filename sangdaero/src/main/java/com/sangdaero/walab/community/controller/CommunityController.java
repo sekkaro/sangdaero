@@ -21,6 +21,7 @@ import com.sangdaero.walab.community.service.CommunityService;
 @RequestMapping("/community")
 public class CommunityController extends CategoryController {
 	
+	
 	private CommunityService mCommunityService;
 	
 	public CommunityController(CommunityService communityService) {
