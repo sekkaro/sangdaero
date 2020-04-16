@@ -21,10 +21,10 @@
     	<input type="hidden" value="0" name="view">
     	<input type="hidden" value="2" name="topCategory">
         Sub: 
-        <select name="subCategory">
-        	<option type="number" value="1">전체</option>
-        	<option type="number" value="2">자원봉사자</option>
-        	<option type="number" value="3">이용자</option>
+        <select name="categoryId">
+        	<option th:each="categoryOption : ${categoryDto}"
+        			th:text="${categoryOption.memo}"
+        			th:value="${categoryOption.id}"/>
         </select><br>
         
         <textarea name="content"></textarea><br>

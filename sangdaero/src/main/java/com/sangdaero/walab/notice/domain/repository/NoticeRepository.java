@@ -16,37 +16,37 @@ import com.sangdaero.walab.common.entity.Board;
 public interface NoticeRepository extends JpaRepository<Board, Long> {
 	
 	// Get notices without deleted
-	Page<Board> findAllBySubCategoryNotAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByCategoryIdNotAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
 	// Get notices which fit to subCategory
-	Page<Board> findAllBySubCategoryAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByCategoryIdAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
 	// Searching notices without deleted
-	Page<Board> findAllByTitleContainingAndSubCategoryNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByTitleContainingAndCategoryIdNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
 	// Searching notices which fit to subCategory
-	Page<Board> findAllByTitleContainingAndSubCategoryAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByTitleContainingAndCategoryIdAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByContentContainingAndSubCategoryNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByContentContainingAndCategoryIdNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByContentContainingAndSubCategoryAndTopCategoryEquals(String content, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByContentContainingAndCategoryIdAndTopCategoryEquals(String content, Long subCategory, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByWriterContainingAndSubCategoryNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByWriterContainingAndCategoryIdNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByWriterContainingAndSubCategoryAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByWriterContainingAndCategoryIdAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
 	// Get count of notices without deleted
-	Long countBySubCategoryNotAndTopCategoryEquals(Long subCategory, Byte topCategory);
+	Long countByCategoryIdNotAndTopCategoryEquals(Long subCategory, Byte topCategory);
 	// Get count of notices which fit to subCategory
-	Long countBySubCategoryAndTopCategoryEquals(Long subCategory, Byte topCategory);
+	Long countByCategoryIdAndTopCategoryEquals(Long subCategory, Byte topCategory);
 	// Get count of searched notices without deleted
-	Long countByTitleContainingAndSubCategoryNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
+	Long countByTitleContainingAndCategoryIdNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
 	// Get count of searched notices which fit to subCategory
-	Long countByTitleContainingAndSubCategoryAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
+	Long countByTitleContainingAndCategoryIdAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
 	
-	Long countByContentContainingAndSubCategoryNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory);
+	Long countByContentContainingAndCategoryIdNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory);
 	
-	Long countByContentContainingAndSubCategoryAndTopCategoryEquals(String content, Long subCategory, Byte topCategory);
+	Long countByContentContainingAndCategoryIdAndTopCategoryEquals(String content, Long subCategory, Byte topCategory);
 	
-	Long countByWriterContainingAndSubCategoryNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
+	Long countByWriterContainingAndCategoryIdNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
 	
-	Long countByWriterContainingAndSubCategoryAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
+	Long countByWriterContainingAndCategoryIdAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
 	// Increasing view count when click notice
 	@Transactional
 	@Modifying
@@ -56,5 +56,5 @@ public interface NoticeRepository extends JpaRepository<Board, Long> {
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE board SET sub_category=:sub_category WHERE id=:id", nativeQuery = true)
-	void updateNoticeSubCategory(@Param("sub_category") Long subCategory, @Param("id") Long id);
+	void updateNoticeCategoryId(@Param("sub_category") Long subCategory, @Param("id") Long id);
 }

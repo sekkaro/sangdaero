@@ -7,7 +7,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.sangdaero.walab.common.entity.Board;
+import com.sangdaero.walab.common.entity.BoardCategory;
+import com.sangdaero.walab.community.domain.repository.CategoryRepository;
 import com.sangdaero.walab.community.domain.repository.CommunityRepository;
+import com.sangdaero.walab.community.dto.CategoryDto;
 import com.sangdaero.walab.community.dto.CommunityDto;
 
 import javax.transaction.Transactional;
@@ -19,15 +22,17 @@ import java.util.Optional;
 public class CommunityService {
 
     private CommunityRepository mCommunityRepository;
+    private CategoryRepository mCategoryRepository;
     private static final int BLOCK_PAGE_NUMCOUNT = 6; // 블럭에 존재하는 페이지 수
     private static final int PAGE_POSTCOUNT = 3;  // 한 페이지에 존재하는 게시글 수
     private static final Byte topCategory = 2;
 
-    public CommunityService(CommunityRepository communityRepository) {
+    public CommunityService(CommunityRepository communityRepository, CategoryRepository categoryRepository) {
         this.mCommunityRepository = communityRepository;
+        this.mCategoryRepository = categoryRepository;
     }
     
-    // Convert Entity to DTO
+    // Convert Community Entity to DTO
     private CommunityDto convertEntityToDto(Board community) {
         return CommunityDto.builder()
                 .id(community.getId())
@@ -36,74 +41,87 @@ public class CommunityService {
                 .writer(community.getWriter())
                 .view(community.getView())
                 .topCategory(community.getTopCategory())
-                .subCategory(community.getSubCategory())
+                .categoryId(community.getCategoryId())
                 .createdDate(community.getCreatedDate())
                 .modifiedDate(community.getModifiedDate())
                 .build();
     }
 
-    // Save
+    // Convert Category Entity to DTO
+    private CategoryDto convertEntityToDto(BoardCategory category) {
+        return CategoryDto.builder()
+                .id(category.getId())
+                .topCategory(category.getTopCategory())
+                .status(category.getStatus())
+                .memo(category.getMemo())
+                .communityManager(category.getCommunityManager())
+                .createdDate(category.getCreatedDate())
+                .modifiedDate(category.getModifiedDate())
+                .build();
+    }
+    
+    // Save post
     public Long savePost(CommunityDto communityDto) {
         return mCommunityRepository.save(communityDto.toEntity()).getId();
     }
     
-    // Update
+    // Update post
     public Long updatePost(CommunityDto communityDto) {
         return mCommunityRepository.save(communityDto.toEntity()).getId();
     }
     
-    // Delete
+    // Delete post
     public void deletePost(Long id) {
     	Long deleteCategory = (long) 0;
-    	mCommunityRepository.updateCommunitySubCategory(deleteCategory, id);
+    	mCommunityRepository.updateCommunityCategoryId(deleteCategory, id);
     }
 
     // getCommunitylist -> convertEntitytoDto
-    public List<CommunityDto> getCommunitylist(Integer pageNum, Long subCategory, String keyword, Integer searchType) {
+    public List<CommunityDto> getCommunitylist(Integer pageNum, Long categoryId, String keyword, Integer searchType) {
     	Page<Board> page;
 
    		switch(searchType) {
    			// Search by Title
     		case 1:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-            		page = mCommunityRepository.findAllByTitleContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory,
+            		page = mCommunityRepository.findAllByTitleContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			} else {
-    				page = mCommunityRepository.findAllByTitleContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory,
+    				page = mCommunityRepository.findAllByTitleContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			}
     			break;
     		// Search by Content
     		case 2:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-            		page = mCommunityRepository.findAllByContentContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory,
+            		page = mCommunityRepository.findAllByContentContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			} else {
-    				page = mCommunityRepository.findAllByContentContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory,
+    				page = mCommunityRepository.findAllByContentContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			}
     			break;
     		// Search by Writer
     		case 3:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-            		page = mCommunityRepository.findAllByWriterContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory,
+            		page = mCommunityRepository.findAllByWriterContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			} else {
-    				page = mCommunityRepository.findAllByWriterContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory,
+    				page = mCommunityRepository.findAllByWriterContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			}
     			break;
-    		// Communitys without search
+    		// Communities without search
     		default:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
             		Long deleted = (long) 0;
-            		page = mCommunityRepository.findAllBySubCategoryNotAndTopCategoryEquals(deleted, topCategory,
+            		page = mCommunityRepository.findAllByCategoryIdNotAndTopCategoryEquals(deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
             	} else {
-            		page = mCommunityRepository.findAllBySubCategoryAndTopCategoryEquals(subCategory, topCategory,
+            		page = mCommunityRepository.findAllByCategoryIdAndTopCategoryEquals(categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
             	}
     			break;
@@ -121,11 +139,11 @@ public class CommunityService {
     
     
     // getPageList -> getCommunityCount
-    public Integer[] getPageList(Integer curPageNum, Long subCategory, String keyword, Integer searchType) {
+    public Integer[] getPageList(Integer curPageNum, Long categoryId, String keyword, Integer searchType) {
         Integer[] pageList = new Integer[BLOCK_PAGE_NUMCOUNT];
 
         // 총 게시글 수
-        Double postsTotalCount = Double.valueOf(this.getCommunityCount(subCategory, keyword, searchType));
+        Double postsTotalCount = Double.valueOf(this.getCommunityCount(categoryId, keyword, searchType));
 
         // 총 게시글 수를 기준으로 계산한 마지막 페이지 번호 계산
         Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POSTCOUNT)));
@@ -147,35 +165,35 @@ public class CommunityService {
     }
     
 
-    public Long getCommunityCount(Long subCategory, String keyword, Integer searchType) {
+    public Long getCommunityCount(Long categoryId, String keyword, Integer searchType) {
     	switch(searchType) {
     		case 1:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    	    		return mCommunityRepository.countByTitleContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory);
+    	    		return mCommunityRepository.countByTitleContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory);
     	    	} else {
-    	    		return mCommunityRepository.countByTitleContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory);
+    	    		return mCommunityRepository.countByTitleContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory);
     	    	}
     		case 2:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    	    		return mCommunityRepository.countByContentContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory);
+    	    		return mCommunityRepository.countByContentContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory);
     	    	} else {
-    	    		return mCommunityRepository.countByContentContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory);
+    	    		return mCommunityRepository.countByContentContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory);
     	    	}
     		case 3:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    	    		return mCommunityRepository.countByWriterContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory);
+    	    		return mCommunityRepository.countByWriterContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory);
     	    	} else {
-    	    		return mCommunityRepository.countByWriterContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory);
+    	    		return mCommunityRepository.countByWriterContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory);
     	    	}
     		default:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    	    		return mCommunityRepository.countBySubCategoryNotAndTopCategoryEquals(deleted, topCategory);
+    	    		return mCommunityRepository.countByCategoryIdNotAndTopCategoryEquals(deleted, topCategory);
     	    	} else {
-    	    		return mCommunityRepository.countBySubCategoryAndTopCategoryEquals(subCategory, topCategory);
+    	    		return mCommunityRepository.countByCategoryIdAndTopCategoryEquals(categoryId, topCategory);
     	    	}
     	}
     }
@@ -194,7 +212,7 @@ public class CommunityService {
                 .writer(community.getWriter())
                 .view(community.getView()+ 1)
                 .topCategory(community.getTopCategory())
-                .subCategory(community.getSubCategory())
+                .categoryId(community.getCategoryId())
                 .createdDate(community.getCreatedDate())
                 .modifiedDate(community.getModifiedDate())
                 .build();
@@ -202,20 +220,57 @@ public class CommunityService {
         return communityDto;
     }
     
-	/*
-	 * // Search post public List<CommunityDto> searchPosts(String keyword, int
-	 * searchType) { Page<Community> page;
-	 * 
-	 * switch(searchType) { case 1: List<Community> communitys =
-	 * mCommunityRepository.findByTitleContaining(keyword); break; } List<Community>
-	 * communitys = mCommunityRepository.findByTitleContaining(keyword); List<CommunityDto>
-	 * communityDtoList = new ArrayList<>();
-	 * 
-	 * if(communitys.isEmpty()) return communityDtoList;
-	 * 
-	 * for(Community Community : communitys) {
-	 * communityDtoList.add(this.convertEntityToDto(Community)); }
-	 * 
-	 * return communityDtoList; }
-	 */
+    // Save category
+    public Long saveCategory(CategoryDto categoryDto) {
+        return mCategoryRepository.save(categoryDto.toEntity()).getId();
+    }
+    
+    // Update category
+    public Long updateCategory(CategoryDto categoryDto) {
+        return mCategoryRepository.save(categoryDto.toEntity()).getId();
+    }
+    
+    // Delete category
+    public void deleteCategory(Long id) {
+    	Byte delete = 0;
+		mCategoryRepository.updateCommunityCategoryId(delete, id);
+    }
+    
+    public List<CategoryDto> getCategory(Byte topCategory) {
+    	List<BoardCategory> boardCategories;
+    	
+    	if (topCategory != 0) {
+    		boardCategories = mCategoryRepository.findAllByTopCategory(topCategory);
+    	} else {
+    		boardCategories = mCategoryRepository.findAll();
+    	}
+    	
+    	List<CategoryDto> categoryDtoList = new ArrayList<CategoryDto>();
+    	
+    	for(BoardCategory boardCategory : boardCategories) {
+    		categoryDtoList.add(this.convertEntityToDto(boardCategory));
+    	}
+    	
+    	return categoryDtoList;
+    	
+    }
+    
+    // Detail of id's category
+    public CategoryDto getCategoryDetail(Long id) {
+        Optional<BoardCategory> CategoryWrapper = mCategoryRepository.findById(id);
+        System.out.println("\n\n"+CategoryWrapper+"\n\n");
+        BoardCategory category = CategoryWrapper.get();
+
+        CategoryDto categoryDto = CategoryDto.builder()
+                .id(category.getId())
+                .topCategory(category.getTopCategory())
+                .status(category.getStatus())
+                .memo(category.getMemo())
+                .communityManager(category.getCommunityManager())
+                .createdDate(category.getCreatedDate())
+                .modifiedDate(category.getModifiedDate())
+                .build();
+
+        return categoryDto;
+    }
 }

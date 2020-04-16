@@ -24,10 +24,12 @@
 	       작성자 : <input type="text" name="writer" th:value="${communityDto.writer}"> <br>
 	    <input type="hidden" value="1" name="topCategory">
 	    Sub: 
-        <select name="subCategory">
-        	<option type="number" value="1">전체</option>
-        	<option type="number" value="2">자원봉사자</option>
-        	<option type="number" value="3">이용자</option>
+        <select name="categoryId">
+        	<option th:each="category : ${categoryDto}"
+        			th:text="${category.memo}"
+        			th:value="${category.id}"
+        			th:selected="${category.id} == ${communityDto.categoryId}"/> 
+        	<option value="0" th:selected="0 == ${communityDto.categoryId}">삭제</option>
         </select><br> 
         
     

@@ -36,7 +36,7 @@ public class NoticeService {
                 .writer(notice.getWriter())
                 .view(notice.getView())
                 .topCategory(notice.getTopCategory())
-                .subCategory(notice.getSubCategory())
+                .categoryId(notice.getCategoryId())
                 .createdDate(notice.getCreatedDate())
                 .modifiedDate(notice.getModifiedDate())
                 .build();
@@ -55,60 +55,60 @@ public class NoticeService {
     // Delete
     public void deletePost(Long id) {
     	Long deleteCategory = (long) 0;
-    	mNoticeRepository.updateNoticeSubCategory(deleteCategory, id);
+    	mNoticeRepository.updateNoticeCategoryId(deleteCategory, id);
     }
 
     // getNoticelist -> convertEntitytoDto
-    public List<NoticeDto> getNoticelist(Integer pageNum, Long subCategory, String keyword, Integer searchType) {
+    public List<NoticeDto> getNoticelist(Integer pageNum, Long categoryId, String keyword, Integer searchType) {
     	Page<Board> page;
 
    		switch(searchType) {
    			// Search by Title
     		case 1:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-            		page = mNoticeRepository.findAllByTitleContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory,
+            		page = mNoticeRepository.findAllByTitleContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			} else {
-    				page = mNoticeRepository.findAllByTitleContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory,
+    				page = mNoticeRepository.findAllByTitleContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			}
     			break;
     		// Search by Content
     		case 2:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-            		page = mNoticeRepository.findAllByContentContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory,
+            		page = mNoticeRepository.findAllByContentContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			} else {
-    				page = mNoticeRepository.findAllByContentContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory,
+    				page = mNoticeRepository.findAllByContentContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			}
     			break;
     		// Search by Writer
     		case 3:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-            		page = mNoticeRepository.findAllByWriterContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory,
+            		page = mNoticeRepository.findAllByWriterContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			} else {
-    				page = mNoticeRepository.findAllByWriterContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory,
+    				page = mNoticeRepository.findAllByWriterContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
     			}
     			break;
     		// Notices without search
     		default:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
             		Long deleted = (long) 0;
             		
             		System.out.println("\n\n");
     				System.out.println(deleted);
     				System.out.println(topCategory);
     				System.out.println("\n\n");
-            		page = mNoticeRepository.findAllBySubCategoryNotAndTopCategoryEquals(deleted, topCategory,
+            		page = mNoticeRepository.findAllByCategoryIdNotAndTopCategoryEquals(deleted, topCategory,
             				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
             	} else {
-            		page = mNoticeRepository.findAllBySubCategoryAndTopCategoryEquals(subCategory, topCategory,
+            		page = mNoticeRepository.findAllByCategoryIdAndTopCategoryEquals(categoryId, topCategory,
             				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
             	}
     			break;
@@ -126,11 +126,11 @@ public class NoticeService {
     
     
     // getPageList -> getNoticeCount
-    public Integer[] getPageList(Integer curPageNum, Long subCategory, String keyword, Integer searchType) {
+    public Integer[] getPageList(Integer curPageNum, Long categoryId, String keyword, Integer searchType) {
         Integer[] pageList = new Integer[BLOCK_PAGE_NUMCOUNT];
 
         // 총 게시글 수
-        Double postsTotalCount = Double.valueOf(this.getNoticeCount(subCategory, keyword, searchType));
+        Double postsTotalCount = Double.valueOf(this.getNoticeCount(categoryId, keyword, searchType));
 
         // 총 게시글 수를 기준으로 계산한 마지막 페이지 번호 계산
         Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POSTCOUNT)));
@@ -152,32 +152,32 @@ public class NoticeService {
     }
     
 
-    public Long getNoticeCount(Long subCategory, String keyword, Integer searchType) {
+    public Long getNoticeCount(Long categoryId, String keyword, Integer searchType) {
     	
     	switch(searchType) {
     		case 1:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    	    		return mNoticeRepository.countByTitleContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory);
+    	    		return mNoticeRepository.countByTitleContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory);
     	    	} else {
-    	    		return mNoticeRepository.countByTitleContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory);
+    	    		return mNoticeRepository.countByTitleContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory);
     	    	}
     		case 2:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    	    		return mNoticeRepository.countByContentContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory);
+    	    		return mNoticeRepository.countByContentContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory);
     	    	} else {
-    	    		return mNoticeRepository.countByContentContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory);
+    	    		return mNoticeRepository.countByContentContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory);
     	    	}
     		case 3:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
-    	    		return mNoticeRepository.countByWriterContainingAndSubCategoryNotAndTopCategoryEquals(keyword, deleted, topCategory);
+    	    		return mNoticeRepository.countByWriterContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory);
     	    	} else {
-    	    		return mNoticeRepository.countByWriterContainingAndSubCategoryAndTopCategoryEquals(keyword, subCategory, topCategory);
+    	    		return mNoticeRepository.countByWriterContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory);
     	    	}
     		default:
-    			if (subCategory == 1) {
+    			if (categoryId == 1) {
     				Long deleted = (long) 0;
     				
     				System.out.println("\n\n");
@@ -185,9 +185,9 @@ public class NoticeService {
     				System.out.println(topCategory);
     				System.out.println("\n\n");
     				
-    	    		return mNoticeRepository.countBySubCategoryNotAndTopCategoryEquals(deleted, topCategory);
+    	    		return mNoticeRepository.countByCategoryIdNotAndTopCategoryEquals(deleted, topCategory);
     	    	} else {
-    	    		return mNoticeRepository.countBySubCategoryAndTopCategoryEquals(subCategory, topCategory);
+    	    		return mNoticeRepository.countByCategoryIdAndTopCategoryEquals(categoryId, topCategory);
     	    	}
     	}
     }
@@ -206,7 +206,7 @@ public class NoticeService {
                 .writer(notice.getWriter())
                 .view(notice.getView()+ 1)
                 .topCategory(notice.getTopCategory())
-                .subCategory(notice.getSubCategory())
+                .categoryId(notice.getCategoryId())
                 .createdDate(notice.getCreatedDate())
                 .modifiedDate(notice.getModifiedDate())
                 .build();

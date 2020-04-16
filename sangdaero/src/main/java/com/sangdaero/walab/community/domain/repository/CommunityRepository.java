@@ -16,45 +16,46 @@ import com.sangdaero.walab.common.entity.Board;
 public interface CommunityRepository extends JpaRepository<Board, Long> {
 	
 	// Get communities without deleted
-	Page<Board> findAllBySubCategoryNotAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
-	// Get communities which fit to subCategory
-	Page<Board> findAllBySubCategoryAndTopCategoryEquals(Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByCategoryIdNotAndTopCategoryEquals(Long categoryId, Byte topCategory, Pageable page);
+	// Get communities which fit to categoryId
+	Page<Board> findAllByCategoryIdAndTopCategoryEquals(Long categoryId, Byte topCategory, Pageable page);
 	// Searching communities without deleted
-	Page<Board> findAllByTitleContainingAndSubCategoryNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
-	// Searching communities which fit to subCategory
-	Page<Board> findAllByTitleContainingAndSubCategoryAndTopCategoryEquals(String title, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByTitleContainingAndCategoryIdNotAndTopCategoryEquals(String title, Long categoryId, Byte topCategory, Pageable page);
+	// Searching communities which fit to categoryId
+	Page<Board> findAllByTitleContainingAndCategoryIdAndTopCategoryEquals(String title, Long categoryId, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByContentContainingAndSubCategoryNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByContentContainingAndCategoryIdNotAndTopCategoryEquals(String content, Long categoryId, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByContentContainingAndSubCategoryAndTopCategoryEquals(String content, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByContentContainingAndCategoryIdAndTopCategoryEquals(String content, Long categoryId, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByWriterContainingAndSubCategoryNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByWriterContainingAndCategoryIdNotAndTopCategoryEquals(String writer, Long categoryId, Byte topCategory, Pageable page);
 	
-	Page<Board> findAllByWriterContainingAndSubCategoryAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory, Pageable page);
+	Page<Board> findAllByWriterContainingAndCategoryIdAndTopCategoryEquals(String writer, Long categoryId, Byte topCategory, Pageable page);
 	// Get count of communities without deleted
-	Long countBySubCategoryNotAndTopCategoryEquals(Long subCategory, Byte topCategory);
-	// Get count of communities which fit to subCategory
-	Long countBySubCategoryAndTopCategoryEquals(Long subCategory, Byte topCategory);
+	Long countByCategoryIdNotAndTopCategoryEquals(Long categoryId, Byte topCategory);
+	// Get count of communities which fit to categoryId
+	Long countByCategoryIdAndTopCategoryEquals(Long categoryId, Byte topCategory);
 	// Get count of searched communities without deleted
-	Long countByTitleContainingAndSubCategoryNotAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
-	// Get count of searched communities which fit to subCategory
-	Long countByTitleContainingAndSubCategoryAndTopCategoryEquals(String title, Long subCategory, Byte topCategory);
+	Long countByTitleContainingAndCategoryIdNotAndTopCategoryEquals(String title, Long categoryId, Byte topCategory);
+	// Get count of searched communities which fit to categoryId
+	Long countByTitleContainingAndCategoryIdAndTopCategoryEquals(String title, Long categoryId, Byte topCategory);
 	
-	Long countByContentContainingAndSubCategoryNotAndTopCategoryEquals(String content, Long subCategory, Byte topCategory);
+	Long countByContentContainingAndCategoryIdNotAndTopCategoryEquals(String content, Long categoryId, Byte topCategory);
 	
-	Long countByContentContainingAndSubCategoryAndTopCategoryEquals(String content, Long subCategory, Byte topCategory);
+	Long countByContentContainingAndCategoryIdAndTopCategoryEquals(String content, Long categoryId, Byte topCategory);
 	
-	Long countByWriterContainingAndSubCategoryNotAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
+	Long countByWriterContainingAndCategoryIdNotAndTopCategoryEquals(String writer, Long categoryId, Byte topCategory);
 	
-	Long countByWriterContainingAndSubCategoryAndTopCategoryEquals(String writer, Long subCategory, Byte topCategory);
+	Long countByWriterContainingAndCategoryIdAndTopCategoryEquals(String writer, Long categoryId, Byte topCategory);
 	// Increasing view count when click community
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE board SET view=:view WHERE id=:id", nativeQuery = true)
 	void updateViewCount(@Param("view") Long view, @Param("id") Long id);
-	// Updating subCategory
+	
+	// Updating categoryId
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE board SET sub_subCategory, Byte topCategory=:sub_subCategory, Byte topCategory WHERE id=:id", nativeQuery = true)
-	void updateCommunitySubCategory(@Param("sub_subCategory, Byte topCategory") Long subCategory, @Param("id") Long id);
+	@Query(value="UPDATE board SET sub_category=:categoryId WHERE id=:id", nativeQuery = true)
+	void updateCommunityCategoryId(@Param("categoryId") Long categoryId, @Param("id") Long id);
 }

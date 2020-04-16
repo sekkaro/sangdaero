@@ -43,22 +43,22 @@ public class Board extends TimeEntity {
     @Column(name="top_category", columnDefinition="TINYINT", length = 1, nullable = false)
     private Byte topCategory;
     
-    @Column(name="sub_category", nullable = false)
-    private Long subCategory;
+    @Column(name="category_id", nullable = false)
+    private Long categoryId;
     
     @Column(columnDefinition="TINYINT", length = 1)
     @ColumnDefault("0")
     private Byte qna;
 
     @Builder
-    public Board(Long id, String title, String content, String writer, Long view, Byte topCategory, Long subCategory) {
+    public Board(Long id, String title, String content, String writer, Long view, Byte topCategory, Long categoryId) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.writer = writer;
         this.view = view;
         this.topCategory = topCategory;
-        this.subCategory = subCategory;
+        this.categoryId = categoryId;
         this.status = 1;
         this.qna = 0;
     }

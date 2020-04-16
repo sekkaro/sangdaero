@@ -67,7 +67,7 @@ public class NoticeController {
         // Category with Korean which shows to detail page
         String category;
         
-        switch(noticeDto.getSubCategory().toString()) {
+        switch(noticeDto.getCategoryId().toString()) {
 	        case "1":
 	        	category = "전체";
 	        	break;
