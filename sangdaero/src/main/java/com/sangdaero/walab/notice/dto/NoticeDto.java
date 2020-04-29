@@ -4,7 +4,6 @@ package com.sangdaero.walab.notice.dto;
 
 import java.time.LocalDateTime;
 
-import com.sangdaero.walab.common.board.domain.entity.CommonBoard;
 import com.sangdaero.walab.common.entity.Board;
 
 import lombok.*;

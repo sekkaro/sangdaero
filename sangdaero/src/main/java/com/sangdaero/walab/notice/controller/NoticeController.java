@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sangdaero.walab.common.board.dto.BoardDto;
 import com.sangdaero.walab.common.category.controller.CategoryController;
 import com.sangdaero.walab.common.category.dto.CategoryDto;
 import com.sangdaero.walab.notice.dto.NoticeDto;
