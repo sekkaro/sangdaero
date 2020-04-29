@@ -42,8 +42,8 @@ public class CommunityService extends CategoryService {
                 .view(community.getView())
                 .topCategory(community.getTopCategory())
                 .categoryId(community.getCategoryId())
-                .createdDate(community.getCreatedDate())
-                .modifiedDate(community.getModifiedDate())
+                .regDate(community.getRegDate())
+                .modDate(community.getModDate())
                 .build();
     }
 
@@ -73,10 +73,10 @@ public class CommunityService extends CategoryService {
     			if (categoryId == 1) {
     				Long deleted = (long) 0;
             		page = mCommunityRepository.findAllByTitleContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			} else {
     				page = mCommunityRepository.findAllByTitleContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			}
     			break;
     		// Search by Content
@@ -84,10 +84,10 @@ public class CommunityService extends CategoryService {
     			if (categoryId == 1) {
     				Long deleted = (long) 0;
             		page = mCommunityRepository.findAllByContentContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			} else {
     				page = mCommunityRepository.findAllByContentContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			}
     			break;
     		// Search by Writer
@@ -95,10 +95,10 @@ public class CommunityService extends CategoryService {
     			if (categoryId == 1) {
     				Long deleted = (long) 0;
             		page = mCommunityRepository.findAllByWriterContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			} else {
     				page = mCommunityRepository.findAllByWriterContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			}
     			break;
     		// Communities without search
@@ -106,10 +106,10 @@ public class CommunityService extends CategoryService {
     			if (categoryId == 1) {
             		Long deleted = (long) 0;
             		page = mCommunityRepository.findAllByCategoryIdNotAndTopCategoryEquals(deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
             	} else {
             		page = mCommunityRepository.findAllByCategoryIdAndTopCategoryEquals(categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
             	}
     			break;
     	}
@@ -200,8 +200,8 @@ public class CommunityService extends CategoryService {
                 .view(community.getView()+ 1)
                 .topCategory(community.getTopCategory())
                 .categoryId(community.getCategoryId())
-                .createdDate(community.getCreatedDate())
-                .modifiedDate(community.getModifiedDate())
+                .regDate(community.getRegDate())
+                .modDate(community.getModDate())
                 .build();
 
         return communityDto;

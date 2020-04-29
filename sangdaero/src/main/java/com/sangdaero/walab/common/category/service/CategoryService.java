@@ -23,8 +23,8 @@ public class CategoryService {
                 .status(category.getStatus())
                 .memo(category.getMemo())
                 .communityManager(category.getCommunityManager())
-                .createdDate(category.getCreatedDate())
-                .modifiedDate(category.getModifiedDate())
+                .regDate(category.getRegDate())
+                .modDate(category.getModDate())
                 .build();
     }
 	
@@ -68,6 +68,14 @@ public class CategoryService {
         Optional<BoardCategory> CategoryWrapper = mCategoryRepository.findById(id);
         System.out.println("\n\n"+CategoryWrapper+"\n\n");
         BoardCategory category = CategoryWrapper.get();
+        
+        System.out.println("\n\n"+category.getId()+"\n\n");
+        System.out.println("\n\n"+category.getTopCategory()+"\n\n");
+        System.out.println("\n\n"+category.getStatus()+"\n\n");
+        System.out.println("\n\n"+category.getMemo()+"\n\n");
+        System.out.println("\n\n"+category.getCommunityManager()+"\n\n");
+        System.out.println("\n\n"+category.getRegDate()+"\n\n");
+        System.out.println("\n\n"+category.getModDate()+"\n\n");
 
         CategoryDto categoryDto = CategoryDto.builder()
                 .id(category.getId())
@@ -75,9 +83,12 @@ public class CategoryService {
                 .status(category.getStatus())
                 .memo(category.getMemo())
                 .communityManager(category.getCommunityManager())
-                .createdDate(category.getCreatedDate())
-                .modifiedDate(category.getModifiedDate())
+                .regDate(category.getRegDate())
+                .modDate(category.getModDate())
                 .build();
+        
+        System.out.println("\n\n"+categoryDto+"\n\n");
+        System.out.println("\n\n"+categoryDto.getModDate()+"\n\n");
 
         return categoryDto;
     }

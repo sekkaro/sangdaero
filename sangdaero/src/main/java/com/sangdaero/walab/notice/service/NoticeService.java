@@ -40,8 +40,8 @@ public class NoticeService extends CategoryService {
                 .view(notice.getView())
                 .topCategory(notice.getTopCategory())
                 .categoryId(notice.getCategoryId())
-                .createdDate(notice.getCreatedDate())
-                .modifiedDate(notice.getModifiedDate())
+                .regDate(notice.getRegDate())
+                .modDate(notice.getModDate())
                 .build();
     }
 
@@ -71,10 +71,10 @@ public class NoticeService extends CategoryService {
     			if (categoryId == 1) {
     				Long deleted = (long) 0;
             		page = mNoticeRepository.findAllByTitleContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			} else {
     				page = mNoticeRepository.findAllByTitleContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			}
     			break;
     		// Search by Content
@@ -82,10 +82,10 @@ public class NoticeService extends CategoryService {
     			if (categoryId == 1) {
     				Long deleted = (long) 0;
             		page = mNoticeRepository.findAllByContentContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			} else {
     				page = mNoticeRepository.findAllByContentContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			}
     			break;
     		// Search by Writer
@@ -93,10 +93,10 @@ public class NoticeService extends CategoryService {
     			if (categoryId == 1) {
     				Long deleted = (long) 0;
             		page = mNoticeRepository.findAllByWriterContainingAndCategoryIdNotAndTopCategoryEquals(keyword, deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			} else {
     				page = mNoticeRepository.findAllByWriterContainingAndCategoryIdAndTopCategoryEquals(keyword, categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
     			}
     			break;
     		// Notices without search
@@ -104,10 +104,10 @@ public class NoticeService extends CategoryService {
     			if (categoryId == 1) {
             		Long deleted = (long) 0;
             		page = mNoticeRepository.findAllByCategoryIdNotAndTopCategoryEquals(deleted, topCategory,
-            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1,PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
             	} else {
             		page = mNoticeRepository.findAllByCategoryIdAndTopCategoryEquals(categoryId, topCategory,
-            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+            				PageRequest.of(pageNum-1, PAGE_POSTCOUNT, Sort.by(Sort.Direction.DESC, "regDate")));
             	}
     			break;
     	}
@@ -198,8 +198,8 @@ public class NoticeService extends CategoryService {
                 .view(notice.getView()+ 1)
                 .topCategory(notice.getTopCategory())
                 .categoryId(notice.getCategoryId())
-                .createdDate(notice.getCreatedDate())
-                .modifiedDate(notice.getModifiedDate())
+                .regDate(notice.getRegDate())
+                .modDate(notice.getModDate())
                 .build();
 
         return noticeDto;
