@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -44,6 +46,11 @@ public class Board extends TimeEntity {
     private Byte topCategory;
     
     // many to one
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name="id")
+	 */
     @Column(name="category_id", nullable = false)
     private Long categoryId;
     

@@ -22,7 +22,7 @@
     <h2 th:text="'작성자 - ' + ${communityDto.writer}"></h2>
     <h2 th:text="'조회수 - ' + ${communityDto.view}"></h2>
     <h2 th:text="'이미지 - ' + ${communityDto.topCategory}"></h2>
-    <h2 th:text="'카테고리 - ' + ${category}"></h2>
+    <h2 th:text="'카테고리 - ' + ${communityDto.categoryId}"></h2>
     <p th:inline="text">작성일 : [[${#temporals.format(communityDto.modDate, 'yyyy-MM-dd HH:mm')}]]</p>
 
     <p th:text="${communityDto.content}"></p>

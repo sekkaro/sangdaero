@@ -15,7 +15,7 @@
   </div>
 </div>
 
-    <form action="/community/category/add" method="post">
+    <form action="/notice/category/add" method="post">
     	항목 : <input type="text" name="memo" maxlength="10"> <br>
     	Top : 
     	<select name="topCategory">
@@ -26,7 +26,7 @@
     	Manager : <input type="text" name="communityManager"> <br>
 
         <input type="submit" value="등록">
-        <a th:href="@{/community/category}">목록</a>
+        <a th:href="@{'/'+${path}+'/category'}">목록</a>
     </form>
     
     <div lang="en" th:replace="common/footer :: footer"></div>
