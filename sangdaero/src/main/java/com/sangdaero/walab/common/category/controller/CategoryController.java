@@ -46,6 +46,13 @@ public class CategoryController {
 	    		@RequestParam(value = "path") String path) {
 			
 			model.addAttribute("path", path);
+			if (path.equals("community")) {
+				model.addAttribute("category", 2);
+			} else if (path.equals("qna")) {
+				model.addAttribute("category", 3);
+			} else {
+				model.addAttribute("category", 1);
+			}
 			
 	        return "html/category/categoryAdd.html";
 	    }

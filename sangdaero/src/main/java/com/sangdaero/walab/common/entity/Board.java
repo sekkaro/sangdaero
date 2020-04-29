@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,10 +47,12 @@ public class Board extends TimeEntity {
     private Byte topCategory;
     
     // many to one
+	
 	/*
-	 * @ManyToOne
+	 * @ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE,
+	 * CascadeType.PERSIST, CascadeType.REFRESH})
 	 * 
-	 * @JoinColumn(name="id")
+	 * @JoinColumn(name="category_id", nullable = false)
 	 */
     @Column(name="category_id", nullable = false)
     private Long categoryId;
