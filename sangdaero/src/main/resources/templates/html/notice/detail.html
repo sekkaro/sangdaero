@@ -25,7 +25,7 @@
     <h2 th:text="'카테고리 - ' + ${noticeDto.categoryId}"></h2>
     <p th:inline="text">작성일 : [[${#temporals.format(noticeDto.modDate, 'yyyy-MM-dd HH:mm')}]]</p>
 
-    <p th:text="${noticeDto.content}"></p>
+    <span th:utext="${noticeDto.content}"></span>
 
     <!-- 수정/삭제 -->
     <div>
